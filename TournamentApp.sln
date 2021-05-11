@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TournamentApp.Api", "TournamentApp.Api\TournamentApp.Api.csproj", "{89EDDEF5-AB9E-4A0D-9916-D9CF0F01C227}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TournamentApp.Repositories", "TournamentApp.Repositories\TournamentApp.Repositories.csproj", "{AC717C72-5520-4B70-AEF7-2DCB4CDF6966}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TournamentApp.Model", "TournamentApp.Model\TournamentApp.Model.csproj", "{0062D9C2-1A93-47B2-8944-23277868909C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{89EDDEF5-AB9E-4A0D-9916-D9CF0F01C227}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89EDDEF5-AB9E-4A0D-9916-D9CF0F01C227}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89EDDEF5-AB9E-4A0D-9916-D9CF0F01C227}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89EDDEF5-AB9E-4A0D-9916-D9CF0F01C227}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC717C72-5520-4B70-AEF7-2DCB4CDF6966}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC717C72-5520-4B70-AEF7-2DCB4CDF6966}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC717C72-5520-4B70-AEF7-2DCB4CDF6966}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC717C72-5520-4B70-AEF7-2DCB4CDF6966}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0062D9C2-1A93-47B2-8944-23277868909C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0062D9C2-1A93-47B2-8944-23277868909C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0062D9C2-1A93-47B2-8944-23277868909C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0062D9C2-1A93-47B2-8944-23277868909C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
