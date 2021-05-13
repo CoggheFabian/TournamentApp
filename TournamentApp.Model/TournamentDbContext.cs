@@ -20,7 +20,6 @@ namespace TournamentApp.Model
             base.OnConfiguring(optionsBuilder);
         }
 
-        public DbSet<Player> Players { get; set; }
         public DbSet<Match> Matches { get; set; }
         public DbSet<Round> Rounds { get; set; }
         public DbSet<Tournament> Tournaments { get; set; }
@@ -28,12 +27,6 @@ namespace TournamentApp.Model
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
-            modelBuilder.Entity<User>()
-                .HasOne(user => user.Player)
-                .WithMany()
-                .HasForeignKey(user => user.PlayerId)
-                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Round>()
                 .HasOne(round => round.PreviousRound)
