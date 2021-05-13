@@ -19,6 +19,7 @@
     <ItemGroup>
       <ProjectReference Include="..\TournamentApp.Model\TournamentApp.Model.csproj" />
       <ProjectReference Include="..\TournamentApp.Repositories\TournamentApp.Repositories.csproj" />
+      <ProjectReference Include="..\TournamentApp.Services\TournamentApp.Services.csproj" />
     </ItemGroup>
 
 </Project>

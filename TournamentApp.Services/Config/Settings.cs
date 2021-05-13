@@ -1,4 +1,4 @@
-namespace TournamentApp.Api.Config
+namespace TournamentApp.Services.Config
 {
     public static class Settings
     {
