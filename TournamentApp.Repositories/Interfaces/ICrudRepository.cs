@@ -7,11 +7,11 @@ namespace TournamentApp.Repositories.Interfaces
 {
     public interface ICrudRepository <T> where T : EntityBase
     {
-        EntityBase GetAsync(int id);
+        T GetAsync(int id);
         void AddAsync(T entity);
         void DeleteAsync(int id);
         void UpdateAsync(int id, T entity);
-        EntityEntry<EntityBase> GetAll();
+        IQueryable<T> GetAll();
         void Save();
     }
 }

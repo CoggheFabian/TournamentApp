@@ -16,7 +16,7 @@ namespace TournamentApp.Repositories.Implementation
         }
 
 
-        public EntityBase GetAsync(int id)
+        public T GetAsync(int id)
         {
             return _context.Set<T>().FirstOrDefault(e => e.Id == id);
         }
@@ -40,7 +40,7 @@ namespace TournamentApp.Repositories.Implementation
             _context.Set<T>().FirstOrDefault(e => e.Id == entity.Id);
         }
 
-        public EntityEntry<EntityBase> GetAll()
+        public IQueryable<T> GetAll()
         {
             throw new System.NotImplementedException();
         }
