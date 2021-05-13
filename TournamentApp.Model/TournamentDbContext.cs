@@ -14,7 +14,7 @@ namespace TournamentApp.Model
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("");
+                optionsBuilder.UseSqlServer("Server=localhost;user=SA;password=Prenk123-321Town;database=TournamentDB;trusted_connection=true;");
             }
 
             base.OnConfiguring(optionsBuilder);
@@ -24,9 +24,16 @@ namespace TournamentApp.Model
         public DbSet<Match> Matches { get; set; }
         public DbSet<Round> Rounds { get; set; }
         public DbSet<Tournament> Tournaments { get; set; }
+        public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            modelBuilder.Entity<User>()
+                .HasOne(user => user.Player)
+                .WithMany()
+                .HasForeignKey(user => user.PlayerId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Round>()
                 .HasOne(round => round.PreviousRound)
