@@ -18,6 +18,7 @@ using Microsoft.OpenApi.Models;
 using TournamentApp.Model;
 using TournamentApp.Repositories.Implementation.TournamentRepositories;
 using TournamentApp.Repositories.Interfaces.TournamentRepositories;
+using TournamentApp.Repositories.Interfaces.UserRepositories;
 using TournamentApp.Services.Config;
 
 namespace TournamentApp.Api
@@ -63,6 +64,7 @@ namespace TournamentApp.Api
             });
 
             services.AddScoped<ITournamentRepository, TournamentRepository>();
+            services.AddScoped<IUserRepository, UserRepo>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

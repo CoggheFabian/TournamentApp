@@ -4,7 +4,7 @@ using TournamentApp.Model;
 
 namespace TournamentApp.Repositories.Interfaces.UserRepositories
 {
-    public interface IUserRepositories: ICrudRepository<User>
+    public interface IUserRepository: ICrudRepository<User>
     {
         public static User Testing(string username, string password)
         {
