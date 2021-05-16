@@ -12,6 +12,8 @@ using TournamentApp.Model;
 using TournamentApp.Repositories.Implementation;
 using TournamentApp.Repositories.Interfaces;
 using TournamentApp.Services.Config;
+using TournamentApp.Services.TournamentService;
+using TournamentApp.Services.UserService;
 
 namespace TournamentApp.Api
 {
@@ -56,7 +58,10 @@ namespace TournamentApp.Api
             });
 
             services.AddScoped<ITournamentRepository, TournamentRepository>();
+            services.AddTransient<ITournamentService, TournamentService>();
+
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddTransient<IUserService, UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

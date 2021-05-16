@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using TournamentApp.Model;
 using TournamentApp.Repositories.Implementation;
+using TournamentApp.Repositories.Interfaces;
 using TournamentApp.Services.Dtos;
 using TournamentApp.Services.Token;
 
@@ -9,8 +10,8 @@ namespace TournamentApp.Services.UserService
 {
     public class UserService : IUserService
     {
-        private readonly UserRepository _userRepository;
-        public UserService(UserRepository userRepository)
+        private readonly IUserRepository _userRepository;
+        public UserService(IUserRepository userRepository)
         {
             _userRepository = userRepository;
         }
@@ -25,8 +26,10 @@ namespace TournamentApp.Services.UserService
             }).First().Entity;
 
             _userRepository.Save();
+
             user.Password = "";
 
+            //Todo make this a CreatedUserDto or somthing instead of a object type
             return new
             {
                 user = user,

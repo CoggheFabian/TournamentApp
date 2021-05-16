@@ -16,23 +16,21 @@ namespace TournamentApp.Services.Dtos
             Regex emailRegex = new Regex(@"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$");
             if (Email != null &&!emailRegex.IsMatch(Email))
             {
-                return new ValidationResult[Convert.ToInt32("Email is not correct, please sumbit a correct email")];
+                yield return new ValidationResult("Email is not correct, please sumbit a correct email");
             }
 
             if (Username != null && Username.Length >= 0 && Username.Length >= 200)
             {
-                return new ValidationResult[Convert.ToInt32("The username schould be between 1 and 200 characters")];
+                yield return new ValidationResult("The username schould be between 1 and 200 characters");
             }
 
             Regex passwordRegex = new Regex(@"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$");
             if (Password != null && !passwordRegex.IsMatch(Password))
             {
-                return new ValidationResult[Convert.ToInt32("The password schould contain least 1 Uppercase character, 1 lowercase character, 1 digit1 1 special character & with a minimum length of 8")];
+                yield return new ValidationResult(
+                    "The password should contain least 1 Uppercase character, 1 lowercase character, 1 digit1 1 special character & with a minimum length of 8");
 
             }
-
-
-            throw new System.NotImplementedException();
         }
     }
 }

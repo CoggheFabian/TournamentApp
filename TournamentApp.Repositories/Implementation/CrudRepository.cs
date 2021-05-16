@@ -45,7 +45,7 @@ namespace TournamentApp.Repositories.Implementation
 
         public void Save()
         {
-            _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
     }
 }

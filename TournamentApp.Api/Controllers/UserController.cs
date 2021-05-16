@@ -21,30 +21,13 @@ namespace TournamentApp.Api.Controllers
         [HttpPost]
         [Route("login")]
         [AllowAnonymous]
-        public async Task<ActionResult<dynamic>> Authenticate([FromBody] UserRegisterDto userRegisterDto)
+        public ActionResult<dynamic> Authenticate([FromBody] UserRegisterDto userRegisterDto)
         {
-            if (!ModelState.IsValid) return BadRequest();
-
+            if (!ModelState.IsValid) return BadRequest(ModelState);
 
             //Checking if user already has a account, if so return with the right request :-)
-            _userService.Register(userRegisterDto);
-
-
-
-            // var user = _userRepository.Testing(user.Name, model.Password);
-            //
-            // if (user == null)
-            //     return NotFound(new { message = "User or password invalid" });
-            //
-            // var token = TokenService.CreateToken(user);
-            // user.Password = "";
-            // return new
-            // {
-            //     user = user,
-            //     token = token
-            // };
-
-            return Ok();
+            var userInfo = _userService.Register(userRegisterDto);
+            return new JsonResult(userInfo);
         }
 
         [HttpGet]
