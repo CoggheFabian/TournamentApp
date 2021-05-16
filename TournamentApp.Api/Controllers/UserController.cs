@@ -24,6 +24,11 @@ namespace TournamentApp.Api.Controllers
         public ActionResult Authenticate([FromBody] UserRegisterDto userRegisterDto)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            if (_userService.GetUserByEmail(userRegisterDto.Email.ToLower()))
+            {
+                return new StatusCodeResult(403);
+            }
             //Checking if user already has a account, if so return with the right request :-)
             var userInfo = _userService.Register(userRegisterDto);
             return new JsonResult(userInfo);
