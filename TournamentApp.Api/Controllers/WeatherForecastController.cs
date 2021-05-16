@@ -30,7 +30,7 @@ namespace TournamentApp.Api.Controllers
         public IEnumerable<WeatherForecast> Get()
         {
             //Again mock code, to see if it works. Im pushing this to main branc in order to show how it's done
-            _repository.AddAsync(new Tournament
+            _repository.Add(new Tournament
             {
                 Date = DateTime.Now,
                 Id = 0,
