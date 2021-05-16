@@ -1,7 +1,7 @@
 using TournamentApp.Repositories.Interfaces;
 using TournamentApp.Services.Dtos;
 
-namespace TournamentApp.Services.Tournament
+namespace TournamentApp.Services.TournamentService
 {
     public class TournamentService : ITournamentService
     {

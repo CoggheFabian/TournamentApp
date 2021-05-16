@@ -1,6 +1,6 @@
 using TournamentApp.Services.Dtos;
 
-namespace TournamentApp.Services.Tournament
+namespace TournamentApp.Services.TournamentService
 {
     public interface ITournamentService
     {
