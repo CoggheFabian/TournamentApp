@@ -16,7 +16,7 @@ namespace TournamentApp.Services.UserService
             _userRepository = userRepository;
         }
 
-        public Object Register(UserRegisterDto userRegisterDto)
+        public CreatedUserDto Register(UserRegisterDto userRegisterDto)
         {
             var user = _userRepository.Add(new User()
             {
@@ -27,13 +27,12 @@ namespace TournamentApp.Services.UserService
 
             _userRepository.Save();
 
-            user.Password = "";
-
-            //Todo make this a CreatedUserDto or somthing instead of a object type
-            return new
+            return new CreatedUserDto()
             {
-                user = user,
-                token = TokenService.CreateToken(user)
+                Email = userRegisterDto.Email,
+                Token = TokenService.CreateToken(user),
+                Username = userRegisterDto.Username,
+                UserId = user.Id,
             };
 
         }
