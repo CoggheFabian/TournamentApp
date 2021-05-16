@@ -58,6 +58,10 @@ namespace TournamentApp.Model
                 .HasForeignKey(round => round.PreviousRoundId)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            modelBuilder.Entity<User>()
+                .HasIndex(user => user.Email)
+                .IsUnique();
+
             base.OnModelCreating(modelBuilder);
 
         }
