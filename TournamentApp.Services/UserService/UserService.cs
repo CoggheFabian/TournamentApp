@@ -1,5 +1,5 @@
 using TournamentApp.Repositories.Implementation;
-using TournamentApp.Repositories.Interfaces;
+using TournamentApp.Services.Dtos;
 
 namespace TournamentApp.Services.UserService
 {
@@ -11,9 +11,9 @@ namespace TournamentApp.Services.UserService
             _userRepository = userRepository;
         }
 
-        public void Register()
+        public void Register(UserRegisterDto userRegisterDto)
         {
-            throw new System.NotImplementedException();
+
         }
 
         public void Login()
@@ -21,4 +21,5 @@ namespace TournamentApp.Services.UserService
             throw new System.NotImplementedException();
         }
     }
+
 }
