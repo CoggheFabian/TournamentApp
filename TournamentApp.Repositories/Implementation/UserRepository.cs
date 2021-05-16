@@ -7,9 +7,15 @@ namespace TournamentApp.Repositories.Implementation
 {
     public class UserRepository : CrudRepository<User>, IUserRepository
     {
+        private readonly TournamentDbContext _context;
         public UserRepository(TournamentDbContext context) : base(context)
         {
+            _context = context;
+        }
 
+        public IQueryable<User> GetUsersByEmail(string email)
+        {
+            return _context.Users.First(user => user.Email == email).ToQueryable();
         }
     }
 }
