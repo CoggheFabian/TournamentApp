@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using TournamentApp.Model;
-using TournamentApp.Repositories.Interfaces.TournamentRepositories;
+using TournamentApp.Repositories.Interfaces;
 
 namespace TournamentApp.Api.Controllers
 {

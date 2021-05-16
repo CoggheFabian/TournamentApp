@@ -1,7 +1,7 @@
 using TournamentApp.Model;
-using TournamentApp.Repositories.Interfaces.TournamentRepositories;
+using TournamentApp.Repositories.Interfaces;
 
-namespace TournamentApp.Repositories.Implementation.TournamentRepositories
+namespace TournamentApp.Repositories.Implementation
 {
     public class TournamentRepository : CrudRepository<Tournament>, ITournamentRepository
     {

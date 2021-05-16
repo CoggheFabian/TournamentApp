@@ -2,8 +2,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TournamentApp.Model;
-using TournamentApp.Repositories.Implementation.UserRepositories;
-using TournamentApp.Repositories.Interfaces.UserRepositories;
+using TournamentApp.Repositories.Interfaces;
 using TournamentApp.Services.Token;
 
 namespace TournamentApp.Api.Controllers

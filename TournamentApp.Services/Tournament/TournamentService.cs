@@ -1,4 +1,4 @@
-using TournamentApp.Repositories.Interfaces.TournamentRepositories;
+using TournamentApp.Repositories.Interfaces;
 using TournamentApp.Services.Dtos;
 
 namespace TournamentApp.Services.Tournament
