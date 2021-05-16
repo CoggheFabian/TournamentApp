@@ -18,8 +18,8 @@ namespace TournamentApp.Services.Token
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    //new Claim(ClaimTypes.Name, user.Player.Name),
-                    //new Claim(ClaimTypes.Role, user.Role)
+                    new Claim(ClaimTypes.Name, user.Name),
+                    new Claim(ClaimTypes.Email, user.Email)
                 }),
                 Expires = DateTime.UtcNow.AddHours(ExpireHours),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

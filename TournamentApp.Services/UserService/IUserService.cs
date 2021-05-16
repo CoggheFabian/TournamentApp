@@ -4,7 +4,7 @@ namespace TournamentApp.Services.UserService
 {
     public interface IUserService
     {
-        void Register(UserRegisterDto userRegisterDto);
+        object Register(UserRegisterDto userRegisterDto);
 
         void Login();
     }

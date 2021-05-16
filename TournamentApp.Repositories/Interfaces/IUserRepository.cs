@@ -6,7 +6,6 @@ namespace TournamentApp.Repositories.Interfaces
 {
     public interface IUserRepository: ICrudRepository<User>
     {
-        public User Testing(string username, string password);
 
     }
 }
