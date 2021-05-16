@@ -9,4 +9,12 @@
       <ProjectReference Include="..\TournamentApp.Repositories\TournamentApp.Repositories.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Misc" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="BCrypt.Net-Next" Version="4.0.2" />
+    </ItemGroup>
+
 </Project>

@@ -21,7 +21,7 @@ namespace TournamentApp.Services.UserService
             var user = _userRepository.Add(new User()
             {
                 Name = userRegisterDto.Username,
-                Password = userRegisterDto.Password, //Todo encrypt this
+                Password = BCrypt.Net.BCrypt.HashPassword(userRegisterDto.Password),
                 Email = userRegisterDto.Email
             }).First().Entity;
 
