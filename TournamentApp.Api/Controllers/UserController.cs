@@ -19,19 +19,27 @@ namespace TournamentApp.Api.Controllers
         }
 
         [HttpPost]
-        [Route("login")]
+        [Route("register")]
         [AllowAnonymous]
-        public ActionResult Authenticate([FromBody] UserRegisterDto userRegisterDto)
+        public ActionResult Register([FromBody] UserRegisterDto userRegisterDto)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            if (_userService.GetUserByEmail(userRegisterDto.Email.ToLower()))
+            if (!_userService.GetUserByEmail(userRegisterDto.Email))
             {
-                return new StatusCodeResult(403);
+                return BadRequest("Somebody with that email already exists");
             }
             //Checking if user already has a account, if so return with the right request :-)
-            var userInfo = _userService.Register(userRegisterDto);
-            return new JsonResult(userInfo);
+            var createdUser = _userService.Register(userRegisterDto);
+            return Created(nameof(UserInfo), createdUser);
+        }
+
+        [HttpGet]
+        [Route("userInfo")]
+        [AllowAnonymous] //Change this
+        public IActionResult UserInfo()
+        {
+            return Ok();
         }
 
 
