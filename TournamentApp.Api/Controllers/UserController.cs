@@ -13,7 +13,7 @@ namespace TournamentApp.Api.Controllers
     [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
-        private IUserService _userService;
+        private readonly IUserService _userService;
         public UserController(IUserService userService)
         {
             _userService = userService;
@@ -26,11 +26,7 @@ namespace TournamentApp.Api.Controllers
         {
             if (!ModelState.IsValid) return BadRequest(ModelState); //Change this to attribute, or middellware
 
-            if (!_userService.CheckIfEmailIsAlreadyRegistered(userRegisterDto.Email))
-            {
-                return BadRequest("Somebody with that email already exists");
-            }
-            
+            if (!_userService.CheckIfEmailIsAlreadyRegistered(userRegisterDto.Email)){ return BadRequest("Somebody with that email already exists"); }
             var createdUser = _userService.Register(userRegisterDto);
             return Created(nameof(UserInfo), createdUser);
         }
@@ -41,19 +37,10 @@ namespace TournamentApp.Api.Controllers
         public ActionResult Login([FromBody] UserLoginDto userLoginDto)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState); //PUt this in middelware.
-            if (!_userService.CheckIfEmailIsAlreadyRegistered(userLoginDto.Email))
-            {
-                return BadRequest("Somebody with that email already exists");
-            }
-
+            if (!_userService.CheckIfEmailIsAlreadyRegistered(userLoginDto.Email)) { return BadRequest("Somebody with that email already exists"); }
             var loggedInUser = _userService.Login(userLoginDto);
-            if (loggedInUser == null)
-            {
-                return BadRequest("The email or password is incorrect");
-            }
+            if (loggedInUser == null) { return BadRequest("The email or password is incorrect"); }
             return Ok(loggedInUser);
-
-
         }
 
         [HttpGet]
