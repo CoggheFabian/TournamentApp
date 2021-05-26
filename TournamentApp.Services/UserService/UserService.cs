@@ -36,15 +36,26 @@ namespace TournamentApp.Services.UserService
             };
         }
 
-        public bool GetUserByEmail(string email)
+        public bool CheckIfEmailIsAlreadyRegistered(string email)
         {
             var count = _userRepository.GetUsersByEmail(email).Count();
             return count >= 0;
         }
 
-        public void Login()
+
+        public LoggedInUserDto Login(UserLoginDto userLoginDto)
         {
-            throw new System.NotImplementedException();
+            User user;
+            try { user = _userRepository.GetUsersByEmail(userLoginDto.Email).First(); }
+            catch (InvalidOperationException e) { return null; }
+
+            var res = BCrypt.Net.BCrypt.Verify(userLoginDto.Password, user.Password);
+            if (BCrypt.Net.BCrypt.Verify(userLoginDto.Password, user.Password)) //Need to check on this
+            {
+                return new LoggedInUserDto {Email = user.Email, Token = TokenService.CreateToken(user), Username = user.Name};
+            }
+
+            return null;
         }
     }
 

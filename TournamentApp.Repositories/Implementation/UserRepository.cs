@@ -18,5 +18,6 @@ namespace TournamentApp.Repositories.Implementation
         {
             return _context.Users.Where(user => user.Email == email).AsQueryable();
         }
+
     }
 }

@@ -6,8 +6,9 @@ namespace TournamentApp.Services.UserService
     {
         CreatedUserDto Register(UserRegisterDto userRegisterDto);
 
-        bool GetUserByEmail(string email);
+        bool CheckIfEmailIsAlreadyRegistered(string email);
 
-        void Login();
+        LoggedInUserDto Login(UserLoginDto userLoginDto);
+
     }
 }

@@ -2,9 +2,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TournamentApp.Model;
-using TournamentApp.Repositories.Interfaces;
 using TournamentApp.Services.Dtos;
-using TournamentApp.Services.Token;
 using TournamentApp.Services.UserService;
 
 namespace TournamentApp.Api.Controllers
@@ -25,13 +23,35 @@ namespace TournamentApp.Api.Controllers
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            if (!_userService.GetUserByEmail(userRegisterDto.Email))
+            if (!_userService.CheckIfEmailIsAlreadyRegistered(userRegisterDto.Email))
             {
                 return BadRequest("Somebody with that email already exists");
             }
-            //Checking if user already has a account, if so return with the right request :-)
+            
             var createdUser = _userService.Register(userRegisterDto);
             return Created(nameof(UserInfo), createdUser);
+        }
+
+        [HttpPost]
+        [Route("login")]
+        [AllowAnonymous]
+        public ActionResult Login([FromBody] UserLoginDto userLoginDto)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState); //PUt this in middelware.
+
+            if (!_userService.CheckIfEmailIsAlreadyRegistered(userLoginDto.Email))
+            {
+                return BadRequest("Somebody with that email already exists");
+            }
+
+            var loggedInUser = _userService.Login(userLoginDto);
+            if (loggedInUser == null)
+            {
+                return BadRequest("The email or password is incorrect");
+            }
+            return Ok(loggedInUser);
+
+
         }
 
         [HttpGet]
