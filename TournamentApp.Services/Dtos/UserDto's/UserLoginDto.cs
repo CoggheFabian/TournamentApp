@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace TournamentApp.Services.Dtos
 {
-    public class UserLoginDto : IValidatableObject
+    public class UserLoginDto : DtoBase, IValidatableObject
     {
         public string Email { get; set; }
         public string Password { get; set; }

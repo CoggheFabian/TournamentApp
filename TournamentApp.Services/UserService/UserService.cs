@@ -42,6 +42,21 @@ namespace TournamentApp.Services.UserService
             return count >= 0;
         }
 
+        public GetUserDto GetUsersByEmail(string email)
+        {
+            var userFromRepo = _userRepository.GetUsersByEmail(email).First();
+            if (userFromRepo != null)
+            {
+                return new GetUserDto
+                {
+                    Email = email,
+                    Username = userFromRepo.Name
+                };
+            }
+            return null;
+
+        }
+
 
         public LoggedInUserDto Login(UserLoginDto userLoginDto)
         {

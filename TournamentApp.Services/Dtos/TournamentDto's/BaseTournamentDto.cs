@@ -1,6 +1,6 @@
 namespace TournamentApp.Services.Dtos
 {
-    public class BaseTournamentDto
+    public class BaseTournamentDto : DtoBase
     {
         public string TournamentName { get; set; }
     }

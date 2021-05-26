@@ -8,6 +8,8 @@ namespace TournamentApp.Services.UserService
 
         bool CheckIfEmailIsAlreadyRegistered(string email);
 
+        GetUserDto GetUsersByEmail(string email);
+
         LoggedInUserDto Login(UserLoginDto userLoginDto);
 
     }

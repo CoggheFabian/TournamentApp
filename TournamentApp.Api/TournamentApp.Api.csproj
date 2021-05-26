@@ -22,4 +22,8 @@
       <ProjectReference Include="..\TournamentApp.Services\TournamentApp.Services.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Attributes" />
+    </ItemGroup>
+
 </Project>

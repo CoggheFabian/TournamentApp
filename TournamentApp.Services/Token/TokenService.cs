@@ -18,7 +18,6 @@ namespace TournamentApp.Services.Token
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, user.Name),
                     new Claim(ClaimTypes.Email, user.Email)
                 }),
                 Expires = DateTime.UtcNow.AddHours(ExpireHours),

@@ -1,3 +1,6 @@
+using System;
+using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -21,7 +24,7 @@ namespace TournamentApp.Api.Controllers
         [AllowAnonymous]
         public ActionResult Register([FromBody] UserRegisterDto userRegisterDto)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (!ModelState.IsValid) return BadRequest(ModelState); //Change this to attribute, or middellware
 
             if (!_userService.CheckIfEmailIsAlreadyRegistered(userRegisterDto.Email))
             {
@@ -38,7 +41,6 @@ namespace TournamentApp.Api.Controllers
         public ActionResult Login([FromBody] UserLoginDto userLoginDto)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState); //PUt this in middelware.
-
             if (!_userService.CheckIfEmailIsAlreadyRegistered(userLoginDto.Email))
             {
                 return BadRequest("Somebody with that email already exists");
@@ -56,10 +58,14 @@ namespace TournamentApp.Api.Controllers
 
         [HttpGet]
         [Route("userInfo")]
-        [AllowAnonymous] //Change this
+        [Authorize]
         public IActionResult UserInfo()
         {
-            return Ok();
+            var loggedInUserHisEmail = HttpContext.User.Claims
+                .FirstOrDefault(c => c.Type.Equals(ClaimTypes.Email, StringComparison.OrdinalIgnoreCase))?.Value;
+            var res  = _userService.GetUsersByEmail(loggedInUserHisEmail);
+            if (res == null) { return Unauthorized(); }
+            return Ok(res);
         }
 
 
