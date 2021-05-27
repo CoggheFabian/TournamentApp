@@ -8,7 +8,7 @@ namespace TournamentApp.Repositories.Implementation.UserRepo
 {
     public class MockUserRepository : IUserRepository
     {
-        private List<User> _users;
+        private readonly List<User> _users;
 
         public MockUserRepository()
         {
@@ -19,10 +19,10 @@ namespace TournamentApp.Repositories.Implementation.UserRepo
             return _users.Where(user => user.Id == id).AsQueryable();
         }
 
-        public IQueryable<EntityEntry<User>> Add(User entity)
+        public IQueryable<User> Add(User entity)
         {
             _users.Add(entity);
-            return null;
+            return entity.ToQueryable();
         }
 
         public IQueryable<User> Delete(int id)

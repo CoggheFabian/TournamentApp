@@ -23,7 +23,7 @@ namespace TournamentApp.Services.UserService
                 Name = userRegisterDto.Username,
                 Password = BCrypt.Net.BCrypt.HashPassword(userRegisterDto.Password),
                 Email = userRegisterDto.Email
-            }).First().Entity;
+            }).First();
 
             _userRepository.Save();
 
@@ -39,10 +39,10 @@ namespace TournamentApp.Services.UserService
         public bool CheckIfEmailIsAlreadyRegistered(string email)
         {
             var count = _userRepository.GetUsersByEmail(email).Count();
-            return count >= 0;
+            return count == 0;
         }
 
-        public GetUserDto GetUsersByEmail(string email)
+        public GetUserDto GetUserByEmail(string email)
         {
             var userFromRepo = _userRepository.GetUsersByEmail(email).First();
             if (userFromRepo != null)

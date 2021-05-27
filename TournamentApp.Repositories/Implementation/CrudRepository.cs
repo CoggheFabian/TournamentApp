@@ -21,9 +21,10 @@ namespace TournamentApp.Repositories.Implementation
             return _context.Set<T>().FirstOrDefault(e => e.Id == id).ToQueryable();
         }
 
-        public IQueryable<EntityEntry<T>> Add(T entity)
+        public IQueryable<T> Add(T entity)
         {
-            return _context.Set<T>().Add(entity).ToQueryable();
+            _context.Set<T>().Add(entity);
+            return entity.ToQueryable();
         }
 
         public IQueryable<T> Delete(int id)

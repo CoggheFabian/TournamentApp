@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using TournamentApp.Model;
 using TournamentApp.Repositories.Implementation.UserRepo;
@@ -11,9 +12,9 @@ namespace TournamentApp.Services.UserService
     {
         private readonly MockUserRepository _mockUserRepository;
 
-        public MockUserService(MockUserRepository mockUserRepository)
+        public MockUserService()
         {
-            _mockUserRepository = mockUserRepository;
+            _mockUserRepository = new MockUserRepository();
         }
 
         public CreatedUserDto Register(UserRegisterDto userRegisterDto)
@@ -23,7 +24,7 @@ namespace TournamentApp.Services.UserService
                 Name = userRegisterDto.Username,
                 Password = BCrypt.Net.BCrypt.HashPassword(userRegisterDto.Password),
                 Email = userRegisterDto.Email
-            }).First().Entity;
+            }).First();
 
             _mockUserRepository.Save();
 
@@ -39,10 +40,10 @@ namespace TournamentApp.Services.UserService
         public bool CheckIfEmailIsAlreadyRegistered(string email)
         {
             var count = _mockUserRepository.GetUsersByEmail(email).Count();
-            return count >= 0;
+            return count == 0;
         }
 
-        public GetUserDto GetUsersByEmail(string email)
+        public GetUserDto GetUserByEmail(string email)
         {
             var userFromRepo = _mockUserRepository.GetUsersByEmail(email).First();
             if (userFromRepo != null)
@@ -53,22 +54,34 @@ namespace TournamentApp.Services.UserService
                     Username = userFromRepo.Name
                 };
             }
+
             return null;
         }
 
         public LoggedInUserDto Login(UserLoginDto userLoginDto)
         {
             User user;
-            try { user = _mockUserRepository.GetUsersByEmail(userLoginDto.Email).First(); }
-            catch (InvalidOperationException e) { return null; }
+            try
+            {
+                user = _mockUserRepository.GetUsersByEmail(userLoginDto.Email).First();
+            }
+            catch (InvalidOperationException e)
+            {
+                return null;
+            }
 
-            var res = BCrypt.Net.BCrypt.Verify(userLoginDto.Password, user.Password);
             if (BCrypt.Net.BCrypt.Verify(userLoginDto.Password, user.Password)) //Need to check on this
             {
-                return new LoggedInUserDto {Email = user.Email, Token = TokenService.CreateToken(user), Username = user.Name};
+                return new LoggedInUserDto
+                    {Email = user.Email, Token = TokenService.CreateToken(user), Username = user.Name};
             }
 
             return null;
+        }
+
+        public List<User> GetUsers()
+        {
+            return _mockUserRepository.GetAll().ToList();
         }
     }
 }
