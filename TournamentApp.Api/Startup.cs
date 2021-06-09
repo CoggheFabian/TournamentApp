@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using TournamentApp.Model;
+using TournamentApp.Model.ConfigManager;
 using TournamentApp.Repositories.Implementation;
 using TournamentApp.Repositories.Implementation.TournamentRepo;
 using TournamentApp.Repositories.Implementation.UserRepo;
@@ -64,6 +65,8 @@ namespace TournamentApp.Api
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddTransient<IUserService, UserService>();
+
+            services.AddSingleton<IDbConfigManager, DbConfigManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

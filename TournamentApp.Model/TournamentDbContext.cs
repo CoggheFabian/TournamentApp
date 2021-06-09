@@ -1,12 +1,17 @@
+using System;
 using Microsoft.EntityFrameworkCore;
+using System.Configuration;
+using Microsoft.IdentityModel.Protocols;
+using TournamentApp.Model.ConfigManager;
 
 namespace TournamentApp.Model
 {
     public class TournamentDbContext : DbContext
     {
-        public TournamentDbContext(DbContextOptions<TournamentDbContext> options) : base(options)
+        private readonly IDbConfigManager _configManager;
+        public TournamentDbContext(DbContextOptions<TournamentDbContext> options, IDbConfigManager configManager) : base(options)
         {
-
+            _configManager = configManager;
         }
 
 
@@ -14,7 +19,7 @@ namespace TournamentApp.Model
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=localhost;user=SA;password=Prenk123-321Town;database=TournamentDB;trusted_connection=true;");
+                optionsBuilder.UseSqlServer(_configManager.GetConnectionString());
             }
 
             base.OnConfiguring(optionsBuilder);
