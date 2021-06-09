@@ -14,6 +14,7 @@ using TournamentApp.Repositories.Implementation.TournamentRepo;
 using TournamentApp.Repositories.Implementation.UserRepo;
 using TournamentApp.Repositories.Interfaces;
 using TournamentApp.Services.Config;
+using TournamentApp.Services.TournamentRoundService;
 using TournamentApp.Services.TournamentService;
 using TournamentApp.Services.UserService;
 
@@ -64,6 +65,9 @@ namespace TournamentApp.Api
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddTransient<IUserService, UserService>();
+
+            services.AddTransient<ITournamentRoundService, TournamentRoundService>();
+
 
             services.AddSingleton<IDbConfigManager, DbConfigManager>();
         }

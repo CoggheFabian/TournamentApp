@@ -10,7 +10,7 @@ namespace TournamentApp.Services.TournamentService
         {
             _repository = repository;
         }
-        public BaseTournamentDto AddTournament(CreateTournamentDto dto)
+        public CreateTournamentDto AddTournament(CreateTournamentDto dto)
         {
 
             //Todo validate the request && Make this method complete

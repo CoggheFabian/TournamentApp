@@ -4,6 +4,6 @@ namespace TournamentApp.Services.TournamentService
 {
     public interface ITournamentService
     {
-        BaseTournamentDto AddTournament(CreateTournamentDto dto);
+        CreateTournamentDto AddTournament(CreateTournamentDto dto);
     }
 }

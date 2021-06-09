@@ -8,7 +8,7 @@ using TournamentApp.Services.UserService;
 
 namespace TournamentApp.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/users")]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
