@@ -1,10 +1,8 @@
 using System;
 using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TournamentApp.Model;
 using TournamentApp.Services.Dtos;
 using TournamentApp.Services.UserService;
 

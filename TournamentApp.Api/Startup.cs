@@ -10,7 +10,6 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using TournamentApp.Model;
 using TournamentApp.Model.ConfigManager;
-using TournamentApp.Repositories.Implementation;
 using TournamentApp.Repositories.Implementation.TournamentRepo;
 using TournamentApp.Repositories.Implementation.UserRepo;
 using TournamentApp.Repositories.Interfaces;

@@ -1,6 +1,3 @@
-using System;
-using System.Linq;
-using TournamentApp.Repositories.Implementation.UserRepo;
 using TournamentApp.Services.Dtos;
 using TournamentApp.Services.UserService;
 using Xunit;
