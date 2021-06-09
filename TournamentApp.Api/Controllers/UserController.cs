@@ -24,7 +24,7 @@ namespace TournamentApp.Api.Controllers
         {
             if (!ModelState.IsValid) return BadRequest(ModelState); //Change this to attribute, or middellware
 
-            if (_userService.CheckIfEmailIsAlreadyRegistered(userRegisterDto.Email)){ return BadRequest("Somebody with that email already exists"); }
+            if (!_userService.CheckIfEmailIsAlreadyRegistered(userRegisterDto.Email)){ return BadRequest("Somebody with that email already exists"); }
             var createdUser = _userService.Register(userRegisterDto);
             return Created(nameof(UserInfo), createdUser);
         }
