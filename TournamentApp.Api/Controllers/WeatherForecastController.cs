@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using TournamentApp.Model;
-using TournamentApp.Repositories.Interfaces.TournamentRepositories;
+using TournamentApp.Repositories.Interfaces;
 
 namespace TournamentApp.Api.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
@@ -30,7 +28,7 @@ namespace TournamentApp.Api.Controllers
         public IEnumerable<WeatherForecast> Get()
         {
             //Again mock code, to see if it works. Im pushing this to main branc in order to show how it's done
-            _repository.AddAsync(new Tournament
+            _repository.Add(new Tournament
             {
                 Date = DateTime.Now,
                 Id = 0,

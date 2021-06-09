@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TournamentApp.Model;
 
 namespace TournamentApp.Model.Migrations
 {
     [DbContext(typeof(TournamentDbContext))]
-    partial class TournamentDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210516152937_AddEmailTouserAndRemoveRoleFromUserEntity")]
+    partial class AddEmailTouserAndRemoveRoleFromUserEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -136,7 +138,7 @@ namespace TournamentApp.Model.Migrations
                         .UseIdentityColumn();
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -145,10 +147,6 @@ namespace TournamentApp.Model.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Email")
-                        .IsUnique()
-                        .HasFilter("[Email] IS NOT NULL");
 
                     b.ToTable("Users");
                 });

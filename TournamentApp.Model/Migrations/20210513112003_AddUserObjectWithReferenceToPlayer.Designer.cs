@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TournamentApp.Model;
 
 namespace TournamentApp.Model.Migrations
 {
     [DbContext(typeof(TournamentDbContext))]
-    partial class TournamentDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210513112003_AddUserObjectWithReferenceToPlayer")]
+    partial class AddUserObjectWithReferenceToPlayer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -67,7 +69,7 @@ namespace TournamentApp.Model.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Player");
+                    b.ToTable("Players");
                 });
 
             modelBuilder.Entity("TournamentApp.Model.Round", b =>
@@ -135,20 +137,18 @@ namespace TournamentApp.Model.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Name")
+                    b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Password")
+                    b.Property<int>("PlayerId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Role")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Email")
-                        .IsUnique()
-                        .HasFilter("[Email] IS NOT NULL");
+                    b.HasIndex("PlayerId");
 
                     b.ToTable("Users");
                 });
@@ -211,6 +211,17 @@ namespace TournamentApp.Model.Migrations
                     b.Navigation("Tournament");
 
                     b.Navigation("WinnerNode");
+                });
+
+            modelBuilder.Entity("TournamentApp.Model.User", b =>
+                {
+                    b.HasOne("TournamentApp.Model.Player", "Player")
+                        .WithMany()
+                        .HasForeignKey("PlayerId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Player");
                 });
 
             modelBuilder.Entity("TournamentApp.Model.Round", b =>

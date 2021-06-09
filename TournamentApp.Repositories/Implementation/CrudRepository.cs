@@ -16,38 +16,37 @@ namespace TournamentApp.Repositories.Implementation
         }
 
 
-        public EntityBase GetAsync(int id)
+        public IQueryable<T> Get(int id)
         {
-            return _context.Set<T>().FirstOrDefault(e => e.Id == id);
+            return _context.Set<T>().FirstOrDefault(e => e.Id == id).ToQueryable();
         }
 
-        public void AddAsync(T entity)
+        public IQueryable<T> Add(T entity)
         {
             _context.Set<T>().Add(entity);
+            return entity.ToQueryable();
         }
 
-        public void DeleteAsync(int id)
+        public IQueryable<T> Delete(int id)
         {
             var entityToDelete = _context.Set<T>().FirstOrDefault(e => e.Id == id);
-            if (entityToDelete != null)
-            {
-                _context.Set<EntityBase>().Remove(entityToDelete);
-            }
+            if (entityToDelete != null) _context.Set<EntityBase>().Remove(entityToDelete);
+            return entityToDelete.ToQueryable();
         }
 
-        public void UpdateAsync(int id, T entity)
+        public IQueryable<T> Update(int id, T entity)
         {
-            _context.Set<T>().FirstOrDefault(e => e.Id == entity.Id);
+            throw new System.NotImplementedException();
         }
 
-        public EntityEntry<EntityBase> GetAll()
+        public IQueryable<T> GetAll()
         {
             throw new System.NotImplementedException();
         }
 
         public void Save()
         {
-            _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
     }
 }

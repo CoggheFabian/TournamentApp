@@ -1,20 +1,21 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using TournamentApp.Model;
-using TournamentApp.Repositories.Implementation.TournamentRepositories;
-using TournamentApp.Repositories.Interfaces.TournamentRepositories;
+using TournamentApp.Model.ConfigManager;
+using TournamentApp.Repositories.Implementation.TournamentRepo;
+using TournamentApp.Repositories.Implementation.UserRepo;
+using TournamentApp.Repositories.Interfaces;
+using TournamentApp.Services.Config;
+using TournamentApp.Services.TournamentService;
+using TournamentApp.Services.UserService;
 
 namespace TournamentApp.Api
 {
@@ -33,12 +34,38 @@ namespace TournamentApp.Api
             services.AddDbContext<TournamentDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllers();
 
+            var key = Encoding.ASCII.GetBytes(Settings.Secret);
+
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+
+            });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "TournamentApp.Api", Version = "v1"});
             });
 
             services.AddScoped<ITournamentRepository, TournamentRepository>();
+            services.AddTransient<ITournamentService, TournamentService>();
+
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddTransient<IUserService, UserService>();
+
+            services.AddSingleton<IDbConfigManager, DbConfigManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,6 +82,7 @@ namespace TournamentApp.Api
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
