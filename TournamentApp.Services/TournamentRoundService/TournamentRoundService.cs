@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using TournamentApp.Model;
+using Combinatorics.Collections;
 using TournamentApp.Repositories.Interfaces;
 using TournamentApp.Services.Dtos;
 using TournamentApp.Services.UserService;
@@ -28,14 +28,22 @@ namespace TournamentApp.Services.TournamentRoundService
             // }).First();
             // _tournamentRepository.Save();
 
-            List<PlayerInTournamentDto>  playerInTournamentDtos= GetPlayersForTournament(createTournamentDto.Players).ToList();
-            Console.WriteLine("boe");
+            var playerInTournamentDtos = GetPlayersForTournament(createTournamentDto.Players);
+            var combinationsPlayers = new Combinations<PlayerInTournamentDto>(playerInTournamentDtos, 2);
+
+            var matches = GenerateMatchesBasedOnPlayerCombination();
+
             // Round firstRound = new Round
             // {
             //     Tournament = tournament,
             //     TournamentId = tournament.Id
             // };
 
+        }
+
+        private List<PlayerInMatchDto> GenerateMatchesBasedOnPlayerCombination()
+        {
+            throw new NotImplementedException();
         }
 
         //This could be in a other service
