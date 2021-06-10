@@ -1,3 +1,4 @@
+using TournamentApp.Model;
 using TournamentApp.Services.Dtos;
 
 namespace TournamentApp.Services.UserService
@@ -11,6 +12,8 @@ namespace TournamentApp.Services.UserService
         GetUserDto GetUserByEmail(string email);
 
         LoggedInUserDto Login(UserLoginDto userLoginDto);
+
+        User FindUserById(int id);
 
     }
 }

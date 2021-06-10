@@ -24,8 +24,8 @@ namespace TournamentApp.Model
 
         [JsonIgnore]
         public Tournament Tournament { get; set; } // ref
-        public string TournamentKey { get; set; }
 
+        public int TournamentId { get; set; }
 
         [JsonIgnore]
         public List<Match> Matches { get; set; } // Ref

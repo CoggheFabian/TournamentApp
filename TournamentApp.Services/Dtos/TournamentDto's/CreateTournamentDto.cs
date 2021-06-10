@@ -9,7 +9,7 @@ namespace TournamentApp.Services.Dtos
         [Required]
         public string Name { get; set; }
         [Required]
-        public List<string> PlayerNames { get; set; }
+        public List<PlayerInTournamentDto> Players { get; set; }
         [Required]
         public DateTime TournamentDate { get; set; }
 

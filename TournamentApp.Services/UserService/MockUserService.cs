@@ -79,6 +79,11 @@ namespace TournamentApp.Services.UserService
             return null;
         }
 
+        public User FindUserById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<User> GetUsers()
         {
             return _mockUserRepository.GetAll().ToList();

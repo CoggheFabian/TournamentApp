@@ -35,7 +35,7 @@ namespace TournamentApp.Api.Controllers
         public ActionResult Login([FromBody] UserLoginDto userLoginDto)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState); //PUt this in middelware.
-            if (!_userService.CheckIfEmailIsAlreadyRegistered(userLoginDto.Email)) { return BadRequest("Somebody with that email already exists"); }
+            if (_userService.CheckIfEmailIsAlreadyRegistered(userLoginDto.Email)) { return BadRequest("The email address or password is wrong"); }
             var loggedInUser = _userService.Login(userLoginDto);
             if (loggedInUser == null) { return BadRequest("The email or password is incorrect"); }
             return Ok(loggedInUser);

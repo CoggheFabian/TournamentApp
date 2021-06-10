@@ -72,6 +72,11 @@ namespace TournamentApp.Services.UserService
 
             return null;
         }
+
+        public User FindUserById(int id)
+        {
+            return _userRepository.Get(id).First();
+        }
     }
 
 }
