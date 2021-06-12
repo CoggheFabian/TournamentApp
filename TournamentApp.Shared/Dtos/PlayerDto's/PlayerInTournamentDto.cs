@@ -1,4 +1,4 @@
-namespace TournamentApp.Services.Dtos
+namespace TournamentApp.Shared.Dtos
 {
     public class PlayerInTournamentDto : DtoBase
     {

@@ -21,6 +21,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\TournamentApp.Services\TournamentApp.Services.csproj" />
+      <ProjectReference Include="..\TournamentApp.Shared\TournamentApp.Shared.csproj" />
     </ItemGroup>
 
 </Project>

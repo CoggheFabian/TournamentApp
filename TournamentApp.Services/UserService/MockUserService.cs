@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using TournamentApp.Model;
 using TournamentApp.Repositories.Implementation.UserRepo;
-using TournamentApp.Services.Dtos;
 using TournamentApp.Services.Token;
+using TournamentApp.Shared.Dtos;
 
 namespace TournamentApp.Services.UserService
 {

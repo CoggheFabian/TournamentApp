@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Combinatorics.Collections;
 using TournamentApp.Repositories.Interfaces;
-using TournamentApp.Services.Dtos;
 using TournamentApp.Services.UserService;
+using TournamentApp.Shared.Dtos;
 
 namespace TournamentApp.Services.TournamentRoundService
 {
@@ -29,9 +28,9 @@ namespace TournamentApp.Services.TournamentRoundService
             // _tournamentRepository.Save();
 
             var playerInTournamentDtos = GetPlayersForTournament(createTournamentDto.Players);
-            var combinationsPlayers = new Combinations<PlayerInTournamentDto>(playerInTournamentDtos, 2);
+            Combinations<PlayerInTournamentDto> combinationsPlayers = new Combinations<PlayerInTournamentDto>(playerInTournamentDtos, 2);
 
-            var matches = GenerateMatchesBasedOnPlayerCombination();
+            var matches = GenerateMatchesBasedOnPlayerCombination(combinationsPlayers);
 
             // Round firstRound = new Round
             // {
@@ -41,7 +40,7 @@ namespace TournamentApp.Services.TournamentRoundService
 
         }
 
-        private List<PlayerInMatchDto> GenerateMatchesBasedOnPlayerCombination()
+        private List<PlayerInMatchDto> GenerateMatchesBasedOnPlayerCombination(Combinations<PlayerInTournamentDto> playersCombination)
         {
             throw new NotImplementedException();
         }
@@ -51,7 +50,7 @@ namespace TournamentApp.Services.TournamentRoundService
         {
             foreach (var playerInTournament in playerInTournamentDtos)
             {
-                var user = _userService.FindUserById(playerInTournament.Id);
+                var user = _userService.FindUserById(playerInTournament.Id); //Change this with 1 Db call thats gets all the users, instead of 5 * a single user.
                 yield return new PlayerInTournamentDto {Id = user.Id, UserName = user.Name};
             }
         }

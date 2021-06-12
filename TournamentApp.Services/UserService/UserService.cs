@@ -1,10 +1,9 @@
 using System;
 using System.Linq;
 using TournamentApp.Model;
-using TournamentApp.Repositories.Implementation;
 using TournamentApp.Repositories.Interfaces;
-using TournamentApp.Services.Dtos;
 using TournamentApp.Services.Token;
+using TournamentApp.Shared.Dtos;
 
 namespace TournamentApp.Services.UserService
 {

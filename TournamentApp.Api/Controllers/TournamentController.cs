@@ -1,8 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TournamentApp.Services.Dtos;
 using TournamentApp.Services.TournamentRoundService;
-using TournamentApp.Services.TournamentService;
+using TournamentApp.Shared.Dtos;
 
 namespace TournamentApp.Api.Controllers
 {

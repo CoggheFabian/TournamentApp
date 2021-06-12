@@ -3,8 +3,8 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TournamentApp.Services.Dtos;
 using TournamentApp.Services.UserService;
+using TournamentApp.Shared.Dtos;
 
 namespace TournamentApp.Api.Controllers
 {

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace TournamentApp.Services.Dtos
+namespace TournamentApp.Shared.Dtos
 {
     public class CreateTournamentDto : DtoBase
     {

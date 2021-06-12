@@ -1,5 +1,5 @@
 using TournamentApp.Repositories.Interfaces;
-using TournamentApp.Services.Dtos;
+using TournamentApp.Shared.Dtos;
 
 namespace TournamentApp.Services.TournamentService
 {
@@ -16,5 +16,6 @@ namespace TournamentApp.Services.TournamentService
             //Todo validate the request && Make this method complete
             throw new System.NotImplementedException();
         }
+
     }
 }

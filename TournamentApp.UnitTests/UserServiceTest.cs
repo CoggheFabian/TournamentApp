@@ -1,5 +1,6 @@
-using TournamentApp.Services.Dtos;
 using TournamentApp.Services.UserService;
+using TournamentApp.Shared;
+using TournamentApp.Shared.Dtos;
 using Xunit;
 
 namespace TournamentApp.UnitTests

@@ -1,4 +1,4 @@
-using TournamentApp.Services.Dtos;
+using TournamentApp.Shared.Dtos;
 
 namespace TournamentApp.Services.TournamentRoundService
 {
