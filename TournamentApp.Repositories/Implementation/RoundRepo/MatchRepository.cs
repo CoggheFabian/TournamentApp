@@ -1,5 +1,8 @@
+using System.Collections.Generic;
+using EFCore.BulkExtensions;
 using TournamentApp.Model;
 using TournamentApp.Repositories.Interfaces;
+using TournamentApp.Shared.Dtos;
 
 namespace TournamentApp.Repositories.Implementation.RoundRepo
 {
@@ -7,15 +10,16 @@ namespace TournamentApp.Repositories.Implementation.RoundRepo
     {
         private readonly TournamentDbContext _context;
 
-        protected MatchRepository(TournamentDbContext context) : base(context)
+        public MatchRepository(TournamentDbContext context) : base(context)
         {
             _context = context;
         }
 
-
-        public int BulkInsertMatches()
+        public void BulkInsertMatches(List<Match> matches)
         {
-            throw new System.NotImplementedException();
+           _context.BulkInsert(matches);
         }
+
+
     }
 }

@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Combinatorics.Collections;
+using TournamentApp.Model;
 using TournamentApp.Repositories.Interfaces;
 using TournamentApp.Services.UserService;
 using TournamentApp.Shared.Dtos;
@@ -11,10 +13,12 @@ namespace TournamentApp.Services.TournamentRoundService
     {
         private readonly ITournamentRepository _tournamentRepository;
         private readonly IUserService _userService;
-        public TournamentRoundService(ITournamentRepository tournamentRepository, IUserService userService)
+        private readonly IMatchRepository _matchRepository;
+        public TournamentRoundService(ITournamentRepository tournamentRepository, IUserService userService, IMatchRepository matchRepository)
         {
             _tournamentRepository = tournamentRepository;
             _userService = userService;
+            _matchRepository = matchRepository;
         }
 
         public void CreateTournament(CreateTournamentDto createTournamentDto)
@@ -32,6 +36,8 @@ namespace TournamentApp.Services.TournamentRoundService
 
             var matches = GenerateMatchesBasedOnPlayerCombination(combinationsPlayers);
 
+            _matchRepository.BulkInsertMatches(matches.ToList());
+
             // Round firstRound = new Round
             // {
             //     Tournament = tournament,
@@ -40,9 +46,21 @@ namespace TournamentApp.Services.TournamentRoundService
 
         }
 
-        private List<PlayerInMatchDto> GenerateMatchesBasedOnPlayerCombination(Combinations<PlayerInTournamentDto> playersCombination)
+        private IEnumerable<Match> GenerateMatchesBasedOnPlayerCombination(Combinations<PlayerInTournamentDto> playersCombination)
         {
-            throw new NotImplementedException();
+            Console.WriteLine("boe");
+            foreach (var playerInMatch in playersCombination)
+            {
+                yield return new Match
+                {
+                    Player1Id = playerInMatch[0].Id,
+                    Player2Id = playerInMatch[1].Id,
+                    ScorePlayer1 = 0,
+                    ScorePlayer2 = 0,
+                    IsMatchPlayed = false,
+                    RoundId = 0
+                };
+            }
         }
 
         //This could be in a other service
