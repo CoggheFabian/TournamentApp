@@ -2,9 +2,8 @@ using System.Collections.Generic;
 using EFCore.BulkExtensions;
 using TournamentApp.Model;
 using TournamentApp.Repositories.Interfaces;
-using TournamentApp.Shared.Dtos;
 
-namespace TournamentApp.Repositories.Implementation.RoundRepo
+namespace TournamentApp.Repositories.Implementation.MatchRepository
 {
     public class MatchRepository : CrudRepository<Match>, IMatchRepository
     {

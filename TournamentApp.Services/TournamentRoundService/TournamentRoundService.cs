@@ -1,9 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Combinatorics.Collections;
 using TournamentApp.Model;
 using TournamentApp.Repositories.Interfaces;
+using TournamentApp.Services.RoundService;
+using TournamentApp.Services.TournamentService;
 using TournamentApp.Services.UserService;
 using TournamentApp.Shared.Dtos;
 
@@ -11,44 +12,35 @@ namespace TournamentApp.Services.TournamentRoundService
 {
     public class TournamentRoundService : ITournamentRoundService
     {
-        private readonly ITournamentRepository _tournamentRepository;
+        private readonly ITournamentService _tournamentService;
         private readonly IUserService _userService;
         private readonly IMatchRepository _matchRepository;
-        public TournamentRoundService(ITournamentRepository tournamentRepository, IUserService userService, IMatchRepository matchRepository)
+        private readonly IRoundService _roundService;
+        public TournamentRoundService(ITournamentService tournamentService, IUserService userService, IMatchRepository matchRepository, IRoundService roundService)
         {
-            _tournamentRepository = tournamentRepository;
+            _tournamentService = tournamentService;
             _userService = userService;
             _matchRepository = matchRepository;
+            _roundService = roundService;
         }
 
         public void CreateTournament(CreateTournamentDto createTournamentDto)
         {
-            // Tournament tournament = _tournamentRepository.Add(new Tournament
-            // {
-            //     Date = createTournamentDto.TournamentDate,
-            //     TournamentName = createTournamentDto.Name,
-            //
-            // }).First();
-            // _tournamentRepository.Save();
-
+            var addedTournament = _tournamentService.AddTournament(createTournamentDto);
             var playerInTournamentDtos = GetPlayersForTournament(createTournamentDto.Players);
-            Combinations<PlayerInTournamentDto> combinationsPlayers = new Combinations<PlayerInTournamentDto>(playerInTournamentDtos, 2);
+            var combinationsPlayers = new Combinations<PlayerInTournamentDto>(playerInTournamentDtos, 2);
 
-            var matches = GenerateMatchesBasedOnPlayerCombination(combinationsPlayers);
+            var mainRound = _roundService.AddMainRoundForTournament(addedTournament);
+
+
+            var matches = GenerateMatchesBasedOnPlayerCombination(combinationsPlayers, mainRound.MainRoundId );
 
             _matchRepository.BulkInsertMatches(matches.ToList());
 
-            // Round firstRound = new Round
-            // {
-            //     Tournament = tournament,
-            //     TournamentId = tournament.Id
-            // };
-
         }
 
-        private IEnumerable<Match> GenerateMatchesBasedOnPlayerCombination(Combinations<PlayerInTournamentDto> playersCombination)
+        private IEnumerable<Match> GenerateMatchesBasedOnPlayerCombination(Combinations<PlayerInTournamentDto> playersCombination, int roundId)
         {
-            Console.WriteLine("boe");
             foreach (var playerInMatch in playersCombination)
             {
                 yield return new Match
@@ -58,7 +50,7 @@ namespace TournamentApp.Services.TournamentRoundService
                     ScorePlayer1 = 0,
                     ScorePlayer2 = 0,
                     IsMatchPlayed = false,
-                    RoundId = 0
+                    RoundId = roundId
                 };
             }
         }

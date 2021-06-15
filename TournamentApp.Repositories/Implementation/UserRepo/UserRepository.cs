@@ -12,7 +12,7 @@ namespace TournamentApp.Repositories.Implementation.UserRepo
             _context = context;
         }
 
-        public IQueryable<Model.User> GetUsersByEmail(string email)
+        public IQueryable<User> GetUsersByEmail(string email)
         {
             return _context.Users.Where(user => user.Email == email).AsQueryable();
         }

@@ -10,6 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using TournamentApp.Model;
 using TournamentApp.Model.ConfigManager;
+using TournamentApp.Repositories.Implementation.MatchRepository;
 using TournamentApp.Repositories.Implementation.RoundRepo;
 using TournamentApp.Repositories.Implementation.TournamentRepo;
 using TournamentApp.Repositories.Implementation.UserRepo;
@@ -70,6 +71,8 @@ namespace TournamentApp.Api
             services.AddScoped<ITournamentRoundService, TournamentRoundService>();
 
             services.AddScoped<IMatchRepository, MatchRepository>();
+
+            services.AddScoped<IRoundRepository, RoundRepository>();
 
 
             services.AddSingleton<IDbConfigManager, DbConfigManager>();
