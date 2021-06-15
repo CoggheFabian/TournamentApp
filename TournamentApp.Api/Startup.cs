@@ -16,6 +16,8 @@ using TournamentApp.Repositories.Implementation.TournamentRepo;
 using TournamentApp.Repositories.Implementation.UserRepo;
 using TournamentApp.Repositories.Interfaces;
 using TournamentApp.Services.Config;
+using TournamentApp.Services.MatchService;
+using TournamentApp.Services.RoundService;
 using TournamentApp.Services.TournamentRoundService;
 using TournamentApp.Services.TournamentService;
 using TournamentApp.Services.UserService;
@@ -71,9 +73,11 @@ namespace TournamentApp.Api
             services.AddScoped<ITournamentRoundService, TournamentRoundService>();
 
             services.AddScoped<IMatchRepository, MatchRepository>();
+            services.AddTransient<IMatchService, MatchService>();
+
 
             services.AddScoped<IRoundRepository, RoundRepository>();
-
+            services.AddTransient<IRoundService, RoundService>();
 
             services.AddSingleton<IDbConfigManager, DbConfigManager>();
         }

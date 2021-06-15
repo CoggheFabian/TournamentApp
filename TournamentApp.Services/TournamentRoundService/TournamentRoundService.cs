@@ -3,6 +3,7 @@ using System.Linq;
 using Combinatorics.Collections;
 using TournamentApp.Model;
 using TournamentApp.Repositories.Interfaces;
+using TournamentApp.Services.MatchService;
 using TournamentApp.Services.RoundService;
 using TournamentApp.Services.TournamentService;
 using TournamentApp.Services.UserService;
@@ -14,28 +15,24 @@ namespace TournamentApp.Services.TournamentRoundService
     {
         private readonly ITournamentService _tournamentService;
         private readonly IUserService _userService;
-        private readonly IMatchRepository _matchRepository;
+        private readonly IMatchService _matchService;
         private readonly IRoundService _roundService;
-        public TournamentRoundService(ITournamentService tournamentService, IUserService userService, IMatchRepository matchRepository, IRoundService roundService)
+        public TournamentRoundService(ITournamentService tournamentService, IUserService userService, IMatchService matchService, IRoundService roundService)
         {
             _tournamentService = tournamentService;
             _userService = userService;
-            _matchRepository = matchRepository;
+            _matchService = matchService;
             _roundService = roundService;
         }
 
-        public void CreateTournament(CreateTournamentDto createTournamentDto)
+        public void CreateTournamentWithMainRounds(CreateTournamentDto createTournamentDto)
         {
             var addedTournament = _tournamentService.AddTournament(createTournamentDto);
             var playerInTournamentDtos = GetPlayersForTournament(createTournamentDto.Players);
             var combinationsPlayers = new Combinations<PlayerInTournamentDto>(playerInTournamentDtos, 2);
-
             var mainRound = _roundService.AddMainRoundForTournament(addedTournament);
-
-
             var matches = GenerateMatchesBasedOnPlayerCombination(combinationsPlayers, mainRound.MainRoundId );
-
-            _matchRepository.BulkInsertMatches(matches.ToList());
+            _matchService.BulkInsertMatches(matches.ToList());
 
         }
 

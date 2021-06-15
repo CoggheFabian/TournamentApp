@@ -19,10 +19,7 @@ namespace TournamentApp.Api.Controllers
         public ActionResult Register([FromBody] CreateTournamentDto createTournamentDto)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState); //Change this to attribute, or middellware
-            _tournamentRoundService.CreateTournament(createTournamentDto);
-            // if (!_userService.CheckIfEmailIsAlreadyRegistered(userRegisterDto.Email)){ return BadRequest("Somebody with that email already exists"); }
-            // var createdUser = _userService.Register(userRegisterDto);
-            // return Created(nameof(UserInfo), createdUser);
+            _tournamentRoundService.CreateTournamentWithMainRounds(createTournamentDto);
             return Ok("Okay");
         }
     }
