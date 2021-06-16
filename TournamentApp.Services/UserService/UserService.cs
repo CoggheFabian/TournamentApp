@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using TournamentApp.Model;
 using TournamentApp.Repositories.Interfaces;
@@ -75,6 +76,18 @@ namespace TournamentApp.Services.UserService
         public User FindUserById(int id)
         {
             return _userRepository.Get(id).First();
+        }
+
+        public IEnumerable<PlayerInTournamentDto> GetPlayersForTournament(List<PlayerInTournamentDto> playerInTournamentDtos)
+        {
+            var playerIds = GetPlayersIdsFromDto(playerInTournamentDtos);
+            var players = _userRepository.GetPlayersForTournament(playerIds).ToList();
+            foreach (var player in players) { yield return new PlayerInTournamentDto {Id = player.Id, UserName = player.Name}; }
+        }
+
+        private List<int> GetPlayersIdsFromDto(List<PlayerInTournamentDto> playerInTournamentDtos)
+        {
+            return playerInTournamentDtos.Select(s => s.Id).ToList();
         }
     }
 

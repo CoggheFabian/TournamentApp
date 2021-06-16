@@ -19,11 +19,7 @@ namespace TournamentApp.Services.RoundService
         {
             var mainRound = _roundRepository.Add(new Round
             {
-                TournamentId = addedTournament.Id,
-                LoserNodeId = 0,
-                PreviousRoundId = 0,
-                WinnerNodeId = 0,
-                NodeSubRoundId = 0
+                TournamentId = addedTournament.Id
             }).First();
 
             _roundRepository.Save();

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TournamentApp.Model;
 using TournamentApp.Shared.Dtos;
 
@@ -14,6 +15,8 @@ namespace TournamentApp.Services.UserService
         LoggedInUserDto Login(UserLoginDto userLoginDto);
 
         User FindUserById(int id);
+
+        IEnumerable<PlayerInTournamentDto> GetPlayersForTournament(List<PlayerInTournamentDto> playerInTournamentDtos);
 
     }
 }

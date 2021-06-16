@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using TournamentApp.Model;
 using TournamentApp.Repositories.Interfaces;
+using TournamentApp.Shared.Dtos;
 
 namespace TournamentApp.Repositories.Implementation.UserRepo
 {
@@ -46,11 +47,17 @@ namespace TournamentApp.Repositories.Implementation.UserRepo
         public void Save()
         {
             //A save does nothing with mock data.
+            throw new System.NotImplementedException();
         }
 
         public IQueryable<User> GetUsersByEmail(string email)
         {
             return _users.Where(user => user.Email == email).AsQueryable();
+        }
+
+        public IEnumerable<User> GetPlayersForTournament(List<int> playersIds)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

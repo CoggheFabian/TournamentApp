@@ -52,7 +52,6 @@ namespace TournamentApp.Services.TournamentRoundService
             }
         }
 
-        //This could be in a other service
         public IEnumerable<PlayerInTournamentDto> GetPlayersForTournament(List<PlayerInTournamentDto> playerInTournamentDtos)
         {
             foreach (var playerInTournament in playerInTournamentDtos)
