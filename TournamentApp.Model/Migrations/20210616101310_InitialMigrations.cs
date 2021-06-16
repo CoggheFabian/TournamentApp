@@ -3,23 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TournamentApp.Model.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class InitialMigrations : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Players",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Players", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "Tournaments",
                 columns: table => new
@@ -35,17 +22,31 @@ namespace TournamentApp.Model.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Rounds",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    PreviousRoundId = table.Column<int>(type: "int", nullable: false),
-                    WinnerNodeId = table.Column<int>(type: "int", nullable: false),
-                    LoserNodeId = table.Column<int>(type: "int", nullable: false),
-                    NodeSubRoundId = table.Column<int>(type: "int", nullable: false),
-                    TournamentId = table.Column<int>(type: "int", nullable: true),
-                    TournamentKey = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    PreviousRoundId = table.Column<int>(type: "int", nullable: true),
+                    WinnerNodeId = table.Column<int>(type: "int", nullable: true),
+                    LoserNodeId = table.Column<int>(type: "int", nullable: true),
+                    NodeSubRoundId = table.Column<int>(type: "int", nullable: true),
+                    TournamentId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -75,7 +76,7 @@ namespace TournamentApp.Model.Migrations
                         column: x => x.TournamentId,
                         principalTable: "Tournaments",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -84,36 +85,33 @@ namespace TournamentApp.Model.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Player1Id = table.Column<int>(type: "int", nullable: true),
-                    Player1Key = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Player1Id = table.Column<int>(type: "int", nullable: false),
                     ScorePlayer1 = table.Column<int>(type: "int", nullable: false),
-                    Player2Id = table.Column<int>(type: "int", nullable: true),
-                    Player2Key = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Player2Id = table.Column<int>(type: "int", nullable: false),
                     ScorePlayer2 = table.Column<int>(type: "int", nullable: false),
                     IsMatchPlayed = table.Column<bool>(type: "bit", nullable: false),
-                    RoundId = table.Column<int>(type: "int", nullable: true)
+                    RoundId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Matches", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Matches_Players_Player1Id",
-                        column: x => x.Player1Id,
-                        principalTable: "Players",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Matches_Players_Player2Id",
-                        column: x => x.Player2Id,
-                        principalTable: "Players",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
                         name: "FK_Matches_Rounds_RoundId",
                         column: x => x.RoundId,
                         principalTable: "Rounds",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Matches_Users_Player1Id",
+                        column: x => x.Player1Id,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Matches_Users_Player2Id",
+                        column: x => x.Player2Id,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -155,6 +153,13 @@ namespace TournamentApp.Model.Migrations
                 name: "IX_Rounds_WinnerNodeId",
                 table: "Rounds",
                 column: "WinnerNodeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Email",
+                table: "Users",
+                column: "Email",
+                unique: true,
+                filter: "[Email] IS NOT NULL");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -163,10 +168,10 @@ namespace TournamentApp.Model.Migrations
                 name: "Matches");
 
             migrationBuilder.DropTable(
-                name: "Players");
+                name: "Rounds");
 
             migrationBuilder.DropTable(
-                name: "Rounds");
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "Tournaments");

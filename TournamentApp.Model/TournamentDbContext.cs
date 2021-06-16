@@ -1,7 +1,4 @@
-using System;
 using Microsoft.EntityFrameworkCore;
-using System.Configuration;
-using Microsoft.IdentityModel.Protocols;
 using TournamentApp.Model.ConfigManager;
 
 namespace TournamentApp.Model
@@ -13,7 +10,6 @@ namespace TournamentApp.Model
         {
             _configManager = configManager;
         }
-
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -37,35 +33,53 @@ namespace TournamentApp.Model
                 .HasOne(round => round.PreviousRound)
                 .WithMany()
                 .HasForeignKey(round => round.PreviousRoundId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.NoAction)
+                .IsRequired(false);
 
             modelBuilder.Entity<Round>()
                 .HasOne(round => round.WinnerNode)
                 .WithMany()
                 .HasForeignKey(round => round.WinnerNodeId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.NoAction)
+                .IsRequired(false);
 
             modelBuilder.Entity<Round>()
                 .HasOne(round => round.LoserNode)
                 .WithMany()
                 .HasForeignKey(round => round.LoserNodeId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.NoAction)
+                .IsRequired(false);
 
             modelBuilder.Entity<Round>()
                 .HasOne(round => round.NodeSubRound)
                 .WithMany()
                 .HasForeignKey(round => round.NodeSubRoundId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.NoAction)
+                .IsRequired(false);
 
             modelBuilder.Entity<Round>()
                 .HasOne(round => round.PreviousRound)
                 .WithMany()
                 .HasForeignKey(round => round.PreviousRoundId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.NoAction)
+                .IsRequired(false);;
 
             modelBuilder.Entity<User>()
                 .HasIndex(user => user.Email)
                 .IsUnique();
+
+
+            modelBuilder.Entity<Match>()
+                .HasOne(match => match.Player1)
+                .WithMany()
+                .HasForeignKey(match => match.Player1Id)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Match>()
+                .HasOne(u => u.Player2)
+                .WithMany()
+                .HasForeignKey(p => p.Player2Id);
+
 
             base.OnModelCreating(modelBuilder);
 

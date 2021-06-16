@@ -8,19 +8,19 @@ namespace TournamentApp.Model
 
         [JsonIgnore]
         public Round PreviousRound { get; set; } // ref
-        public int PreviousRoundId { get; set; }
+        public int? PreviousRoundId { get; set; }
 
         [JsonIgnore]
         public Round WinnerNode { get; set; }// ref
-        public int WinnerNodeId { get; set; }
+        public int? WinnerNodeId { get; set; }
 
 
         [JsonIgnore]
         public Round LoserNode { get; set; } // ref
-        public int LoserNodeId { get; set; }
+        public int? LoserNodeId { get; set; }
 
         public Round NodeSubRound { get; set; } // Embedded
-        public int NodeSubRoundId { get; set; }
+        public int? NodeSubRoundId { get; set; }
 
         [JsonIgnore]
         public Tournament Tournament { get; set; } // ref

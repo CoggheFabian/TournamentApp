@@ -15,27 +15,27 @@ namespace TournamentApp.Model.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.0");
+                .HasAnnotation("ProductVersion", "5.0.7")
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("TournamentApp.Model.Match", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<bool>("IsMatchPlayed")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("Player1Id")
+                    b.Property<int>("Player1Id")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Player2Id")
+                    b.Property<int>("Player2Id")
                         .HasColumnType("int");
 
-                    b.Property<int?>("RoundId")
+                    b.Property<int>("RoundId")
                         .HasColumnType("int");
 
                     b.Property<int>("ScorePlayer1")
@@ -55,44 +55,26 @@ namespace TournamentApp.Model.Migrations
                     b.ToTable("Matches");
                 });
 
-            modelBuilder.Entity("TournamentApp.Model.Player", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Player");
-                });
-
             modelBuilder.Entity("TournamentApp.Model.Round", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("LoserNodeId")
+                    b.Property<int?>("LoserNodeId")
                         .HasColumnType("int");
 
-                    b.Property<int>("NodeSubRoundId")
+                    b.Property<int?>("NodeSubRoundId")
                         .HasColumnType("int");
 
-                    b.Property<int>("PreviousRoundId")
+                    b.Property<int?>("PreviousRoundId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TournamentId")
+                    b.Property<int>("TournamentId")
                         .HasColumnType("int");
 
-                    b.Property<string>("TournamentKey")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("WinnerNodeId")
+                    b.Property<int?>("WinnerNodeId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -115,7 +97,7 @@ namespace TournamentApp.Model.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
@@ -133,7 +115,7 @@ namespace TournamentApp.Model.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(450)");
@@ -155,17 +137,23 @@ namespace TournamentApp.Model.Migrations
 
             modelBuilder.Entity("TournamentApp.Model.Match", b =>
                 {
-                    b.HasOne("TournamentApp.Model.Player", "Player1")
+                    b.HasOne("TournamentApp.Model.User", "Player1")
                         .WithMany()
-                        .HasForeignKey("Player1Id");
+                        .HasForeignKey("Player1Id")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
-                    b.HasOne("TournamentApp.Model.Player", "Player2")
+                    b.HasOne("TournamentApp.Model.User", "Player2")
                         .WithMany()
-                        .HasForeignKey("Player2Id");
+                        .HasForeignKey("Player2Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("TournamentApp.Model.Round", null)
                         .WithMany("Matches")
-                        .HasForeignKey("RoundId");
+                        .HasForeignKey("RoundId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Player1");
 
@@ -177,30 +165,28 @@ namespace TournamentApp.Model.Migrations
                     b.HasOne("TournamentApp.Model.Round", "LoserNode")
                         .WithMany()
                         .HasForeignKey("LoserNodeId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("TournamentApp.Model.Round", "NodeSubRound")
                         .WithMany()
                         .HasForeignKey("NodeSubRoundId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("TournamentApp.Model.Round", "PreviousRound")
                         .WithMany()
                         .HasForeignKey("PreviousRoundId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("TournamentApp.Model.Tournament", "Tournament")
                         .WithMany("Rounds")
-                        .HasForeignKey("TournamentId");
+                        .HasForeignKey("TournamentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("TournamentApp.Model.Round", "WinnerNode")
                         .WithMany()
                         .HasForeignKey("WinnerNodeId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("LoserNode");
 
