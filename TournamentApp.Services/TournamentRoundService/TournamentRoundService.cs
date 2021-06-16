@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Combinatorics.Collections;
 using TournamentApp.Model;
-using TournamentApp.Repositories.Interfaces;
 using TournamentApp.Services.MatchService;
 using TournamentApp.Services.RoundService;
 using TournamentApp.Services.TournamentService;
@@ -25,14 +24,16 @@ namespace TournamentApp.Services.TournamentRoundService
             _roundService = roundService;
         }
 
-        public void CreateTournamentWithMainRounds(CreateTournamentDto createTournamentDto)
+        public CreatedTournamentDto CreateTournamentWithMainRounds(CreateTournamentDto createTournamentDto)
         {
             var addedTournament = _tournamentService.AddTournament(createTournamentDto);
             var playerInTournamentDtos = GetPlayersForTournament(createTournamentDto.Players);
             var combinationsPlayers = new Combinations<PlayerInTournamentDto>(playerInTournamentDtos, 2);
             var mainRound = _roundService.AddMainRoundForTournament(addedTournament);
-            var matches = GenerateMatchesBasedOnPlayerCombination(combinationsPlayers, mainRound.MainRoundId );
-            _matchService.BulkInsertMatches(matches.ToList());
+            var playableMatches = GenerateMatchesBasedOnPlayerCombination(combinationsPlayers, mainRound.MainRoundId );
+            _matchService.BulkInsertMatches(playableMatches.ToList());
+
+            return new CreatedTournamentDto {Id = addedTournament.Id, Matches = playableMatches, Name = addedTournament.Name, TournamentDate = addedTournament.TournamentDate, MainRoundForTournament = mainRound };
 
         }
 

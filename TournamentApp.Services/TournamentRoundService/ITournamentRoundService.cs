@@ -4,6 +4,6 @@ namespace TournamentApp.Services.TournamentRoundService
 {
     public interface ITournamentRoundService
     {
-        void CreateTournamentWithMainRounds(CreateTournamentDto createTournamentDto);
+        CreatedTournamentDto CreateTournamentWithMainRounds(CreateTournamentDto createTournamentDto);
     }
 }

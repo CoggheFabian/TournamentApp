@@ -19,8 +19,7 @@ namespace TournamentApp.Api.Controllers
         public ActionResult Register([FromBody] CreateTournamentDto createTournamentDto)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState); //Change this to attribute, or middellware
-            _tournamentRoundService.CreateTournamentWithMainRounds(createTournamentDto);
-            return Ok("Okay");
+            return Ok(_tournamentRoundService.CreateTournamentWithMainRounds(createTournamentDto));
         }
     }
 }
