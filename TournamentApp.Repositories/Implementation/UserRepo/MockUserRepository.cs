@@ -57,7 +57,7 @@ namespace TournamentApp.Repositories.Implementation.UserRepo
 
         public IEnumerable<User> GetPlayersForTournament(List<int> playersIds)
         {
-            throw new System.NotImplementedException();
+            return GetAll().ToList().Where(user => playersIds.Contains(user.Id));
         }
     }
 }

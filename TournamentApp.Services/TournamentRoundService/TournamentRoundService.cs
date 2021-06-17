@@ -55,11 +55,14 @@ namespace TournamentApp.Services.TournamentRoundService
 
         public IEnumerable<PlayerInTournamentDto> GetPlayersForTournament(List<PlayerInTournamentDto> playerInTournamentDtos)
         {
-            foreach (var playerInTournament in playerInTournamentDtos)
+            var users = _userService.GetPlayersForTournament(playerInTournamentDtos);
+
+            foreach (var playerInTournamentDto in users)
             {
-                var user = _userService.FindUserById(playerInTournament.Id); //Change this with 1 Db call thats gets all the users, instead of 5 * a single user.
-                yield return new PlayerInTournamentDto {Id = user.Id, UserName = user.Name};
+                yield return new PlayerInTournamentDto {Id = playerInTournamentDto.Id, UserName = playerInTournamentDto.UserName};
             }
         }
+
+
     }
 }
