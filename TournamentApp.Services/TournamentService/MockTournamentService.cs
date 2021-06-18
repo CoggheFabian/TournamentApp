@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using TournamentApp.Model;
+using TournamentApp.Repositories.Implementation.TournamentRepo;
 using TournamentApp.Repositories.Interfaces;
 using TournamentApp.Shared.Dtos;
 
@@ -11,9 +12,9 @@ namespace TournamentApp.Services.TournamentService
     {
         private readonly ITournamentRepository _tournamentRepository;
 
-        public MockTournamentService(ITournamentRepository tournamentRepository)
+        public MockTournamentService()
         {
-            _tournamentRepository = tournamentRepository;
+            _tournamentRepository = new MockTournamentRepo();
         }
 
         public CreatedTournamentDto AddTournament(CreateTournamentDto createTournamentDto)

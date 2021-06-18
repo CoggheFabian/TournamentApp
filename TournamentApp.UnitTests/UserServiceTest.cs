@@ -27,7 +27,7 @@ namespace TournamentApp.UnitTests
         }
 
         [Fact]
-        public void TestIfEmailIsAlreadyRegisteredNoDuplicatedTrue()
+        public void TestRegisterWithKnowEmailAddress()
         {
             _mockUserService =  new MockUserService();
             _mockUserService.Register(new UserRegisterDto()
@@ -43,7 +43,7 @@ namespace TournamentApp.UnitTests
 
 
         [Fact]
-        public void TestIfEmailIsAlreadyRegisteredNoDuplicatedFalse()
+        public void TestRegisterWithUnknowEmailAddress()
         {
             _mockUserService =  new MockUserService();
 

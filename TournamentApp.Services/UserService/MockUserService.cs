@@ -21,12 +21,10 @@ namespace TournamentApp.Services.UserService
         {
             var user = _mockUserRepository.Add(new User()
             {
-                Name = userRegisterDto.Username,
+                Name = userRegisterDto.Username.ToLower(),
                 Password = BCrypt.Net.BCrypt.HashPassword(userRegisterDto.Password),
-                Email = userRegisterDto.Email
+                Email = userRegisterDto.Email.ToLower()
             }).First();
-
-            _mockUserRepository.Save();
 
             return new CreatedUserDto()
             {

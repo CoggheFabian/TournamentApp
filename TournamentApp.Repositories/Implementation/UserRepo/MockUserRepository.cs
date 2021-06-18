@@ -14,6 +14,7 @@ namespace TournamentApp.Repositories.Implementation.UserRepo
         public MockUserRepository()
         {
             _users = new List<User>();
+            SeedPlayerDb();
         }
         public IQueryable<User> Get(int id)
         {
@@ -58,6 +59,34 @@ namespace TournamentApp.Repositories.Implementation.UserRepo
         public IEnumerable<User> GetPlayersForTournament(List<int> playersIds)
         {
             return GetAll().ToList().Where(user => playersIds.Contains(user.Id));
+        }
+
+        private void SeedPlayerDb()
+        {
+            _users.AddRange(new List<User>
+            {
+                new User
+                {
+                    Email = "cogghefabian@gmail.com",
+                    Id = 1,
+                    Name = "fabian",
+                    Password = "BOE"
+                },
+                new User
+                {
+                    Email = "thijs.vandeale@live.be",
+                    Id = 2,
+                    Name = "thijs",
+                    Password = "BOE"
+                },
+                new User
+                {
+                    Email = "pauline@vandeale.be",
+                    Id = 3,
+                    Name = "pauline",
+                    Password = "BOE"
+                }
+            });
         }
     }
 }

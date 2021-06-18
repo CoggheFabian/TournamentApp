@@ -20,9 +20,9 @@ namespace TournamentApp.Services.UserService
         {
             var user = _userRepository.Add(new User()
             {
-                Name = userRegisterDto.Username,
+                Name = userRegisterDto.Username.ToLower(),
                 Password = BCrypt.Net.BCrypt.HashPassword(userRegisterDto.Password),
-                Email = userRegisterDto.Email
+                Email = userRegisterDto.Email.ToLower()
             }).First();
 
             _userRepository.Save();

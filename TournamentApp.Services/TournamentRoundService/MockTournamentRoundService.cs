@@ -1,6 +1,9 @@
 using System.Collections.Generic;
+using System.Linq;
 using Combinatorics.Collections;
 using TournamentApp.Model;
+using TournamentApp.Repositories.Implementation.MatchRepository;
+using TournamentApp.Repositories.Implementation.RoundRepo;
 using TournamentApp.Repositories.Implementation.TournamentRepo;
 using TournamentApp.Services.MatchService;
 using TournamentApp.Services.RoundService;
@@ -15,13 +18,16 @@ namespace TournamentApp.Services.TournamentRoundService
         private readonly MockTournamentService _mockTournamentService;
         private readonly MockUserService _mockUserService;
         private readonly MockRoundService _mockRoundService;
+        private readonly MockMatchService _mockMatchService;
 
-        public MockTournamentRoundService(MockUserService mockUserService, MockTournamentService mockTournamentService, MockRoundService mockRoundService)
+        public MockTournamentRoundService()
         {
-            _mockUserService = mockUserService;
-            _mockTournamentService = mockTournamentService;
-            _mockRoundService = mockRoundService;
+            _mockUserService = new MockUserService();
+            _mockTournamentService = new MockTournamentService();
+            _mockRoundService = new MockRoundService();
+            _mockMatchService = new MockMatchService();
         }
+
 
         public CreatedTournamentDto CreateTournamentWithMainRounds(CreateTournamentDto createTournamentDto)
         {
@@ -30,10 +36,9 @@ namespace TournamentApp.Services.TournamentRoundService
             var combinationsPlayers = new Combinations<PlayerInTournamentDto>(playerInTournamentDtos, 2);
             var mainRound = _mockRoundService.AddMainRoundForTournament(addedTournament);
             var playableMatches = GenerateMatchesBasedOnPlayerCombination(combinationsPlayers, mainRound.MainRoundId );
-            // _matchService.BulkInsertMatches(playableMatches.ToList());
-
-            //return new CreatedTournamentDto {Id = addedTournament.Id, Matches = playableMatches, Name = addedTournament.Name, TournamentDate = addedTournament.TournamentDate, MainRoundForTournament = mainRound };
-            return null;
+            _mockMatchService.BulkInsertMatches(playableMatches.ToList());
+            return new CreatedTournamentDto {Id = addedTournament.Id, Matches = playableMatches, Name = addedTournament.Name,
+                                             TournamentDate = addedTournament.TournamentDate, MainRoundForTournament = mainRound };
         }
 
         private IEnumerable<PlayerInTournamentDto> GetPlayersForTournament(List<PlayerInTournamentDto> playerInTournamentDtos)

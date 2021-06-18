@@ -1,5 +1,6 @@
 using System.Linq;
 using TournamentApp.Model;
+using TournamentApp.Repositories.Implementation.RoundRepo;
 using TournamentApp.Repositories.Interfaces;
 using TournamentApp.Shared.Dtos;
 
@@ -10,9 +11,9 @@ namespace TournamentApp.Services.RoundService
 
         private readonly IRoundRepository _roundRepository;
 
-        public MockRoundService(IRoundRepository roundRepository)
+        public MockRoundService()
         {
-            _roundRepository = roundRepository;
+            _roundRepository = new MockRoundRepository();
         }
 
         public MainRoundForTournamentDto AddMainRoundForTournament(CreatedTournamentDto addedTournament)
@@ -22,7 +23,6 @@ namespace TournamentApp.Services.RoundService
                 TournamentId = addedTournament.Id
             }).First();
 
-            _roundRepository.Save();
             return new MainRoundForTournamentDto {MainRoundId = mainRound.Id};
         }
     }
