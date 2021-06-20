@@ -1,10 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using TournamentApp.Model;
-using TournamentApp.Repositories.Implementation;
 using TournamentApp.Repositories.Interfaces;
-using TournamentApp.Services.Dtos;
 using TournamentApp.Services.Token;
+using TournamentApp.Shared.Dtos;
 
 namespace TournamentApp.Services.UserService
 {
@@ -20,9 +20,9 @@ namespace TournamentApp.Services.UserService
         {
             var user = _userRepository.Add(new User()
             {
-                Name = userRegisterDto.Username,
+                Name = userRegisterDto.Username.ToLower(),
                 Password = BCrypt.Net.BCrypt.HashPassword(userRegisterDto.Password),
-                Email = userRegisterDto.Email
+                Email = userRegisterDto.Email.ToLower()
             }).First();
 
             _userRepository.Save();
@@ -71,6 +71,23 @@ namespace TournamentApp.Services.UserService
             }
 
             return null;
+        }
+
+        public User FindUserById(int id)
+        {
+            return _userRepository.Get(id).First();
+        }
+
+        public IEnumerable<PlayerInTournamentDto> GetPlayersForTournament(List<PlayerInTournamentDto> playerInTournamentDtos)
+        {
+            var playerIds = GetPlayersIdsFromDto(playerInTournamentDtos);
+            var players = _userRepository.GetPlayersForTournament(playerIds).ToList();
+            foreach (var player in players) { yield return new PlayerInTournamentDto {Id = player.Id, UserName = player.Name}; }
+        }
+
+        private List<int> GetPlayersIdsFromDto(List<PlayerInTournamentDto> playerInTournamentDtos)
+        {
+            return playerInTournamentDtos.Select(s => s.Id).ToList();
         }
     }
 

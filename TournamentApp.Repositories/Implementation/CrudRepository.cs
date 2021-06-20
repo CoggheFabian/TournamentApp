@@ -41,7 +41,8 @@ namespace TournamentApp.Repositories.Implementation
 
         public IQueryable<T> GetAll()
         {
-            throw new System.NotImplementedException();
+            return _context.Set<T>().ToQueryable() as IQueryable<T>;
+
         }
 
         public void Save()

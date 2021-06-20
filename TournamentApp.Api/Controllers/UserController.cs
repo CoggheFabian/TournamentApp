@@ -3,12 +3,12 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TournamentApp.Services.Dtos;
 using TournamentApp.Services.UserService;
+using TournamentApp.Shared.Dtos;
 
 namespace TournamentApp.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/users")]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -35,7 +35,7 @@ namespace TournamentApp.Api.Controllers
         public ActionResult Login([FromBody] UserLoginDto userLoginDto)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState); //PUt this in middelware.
-            if (!_userService.CheckIfEmailIsAlreadyRegistered(userLoginDto.Email)) { return BadRequest("Somebody with that email already exists"); }
+            if (_userService.CheckIfEmailIsAlreadyRegistered(userLoginDto.Email)) { return BadRequest("The email address or password is wrong"); }
             var loggedInUser = _userService.Login(userLoginDto);
             if (loggedInUser == null) { return BadRequest("The email or password is incorrect"); }
             return Ok(loggedInUser);

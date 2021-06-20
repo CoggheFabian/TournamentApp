@@ -1,9 +1,9 @@
-using TournamentApp.Services.Dtos;
+using TournamentApp.Shared.Dtos;
 
 namespace TournamentApp.Services.TournamentService
 {
     public interface ITournamentService
     {
-        BaseTournamentDto AddTournament(CreateTournamentDto dto);
+        CreatedTournamentDto AddTournament(CreateTournamentDto createTournamentDto);
     }
 }

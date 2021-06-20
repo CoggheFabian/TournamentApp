@@ -1,5 +1,6 @@
-using TournamentApp.Services.Dtos;
 using TournamentApp.Services.UserService;
+using TournamentApp.Shared;
+using TournamentApp.Shared.Dtos;
 using Xunit;
 
 namespace TournamentApp.UnitTests
@@ -26,7 +27,7 @@ namespace TournamentApp.UnitTests
         }
 
         [Fact]
-        public void TestIfEmailIsAlreadyRegisteredNoDuplicatedTrue()
+        public void TestRegisterWithKnowEmailAddress()
         {
             _mockUserService =  new MockUserService();
             _mockUserService.Register(new UserRegisterDto()
@@ -42,7 +43,7 @@ namespace TournamentApp.UnitTests
 
 
         [Fact]
-        public void TestIfEmailIsAlreadyRegisteredNoDuplicatedFalse()
+        public void TestRegisterWithUnknowEmailAddress()
         {
             _mockUserService =  new MockUserService();
 

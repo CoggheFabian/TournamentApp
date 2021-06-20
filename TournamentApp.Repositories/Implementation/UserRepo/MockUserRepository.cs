@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using TournamentApp.Model;
 using TournamentApp.Repositories.Interfaces;
+using TournamentApp.Shared.Dtos;
 
 namespace TournamentApp.Repositories.Implementation.UserRepo
 {
@@ -13,6 +14,7 @@ namespace TournamentApp.Repositories.Implementation.UserRepo
         public MockUserRepository()
         {
             _users = new List<User>();
+            SeedPlayerDb();
         }
         public IQueryable<User> Get(int id)
         {
@@ -46,11 +48,45 @@ namespace TournamentApp.Repositories.Implementation.UserRepo
         public void Save()
         {
             //A save does nothing with mock data.
+            throw new System.NotImplementedException();
         }
 
         public IQueryable<User> GetUsersByEmail(string email)
         {
             return _users.Where(user => user.Email == email).AsQueryable();
+        }
+
+        public IEnumerable<User> GetPlayersForTournament(List<int> playersIds)
+        {
+            return GetAll().ToList().Where(user => playersIds.Contains(user.Id));
+        }
+
+        private void SeedPlayerDb()
+        {
+            _users.AddRange(new List<User>
+            {
+                new User
+                {
+                    Email = "cogghefabian@gmail.com",
+                    Id = 1,
+                    Name = "fabian",
+                    Password = "BOE"
+                },
+                new User
+                {
+                    Email = "thijs.vandeale@live.be",
+                    Id = 2,
+                    Name = "thijs",
+                    Password = "BOE"
+                },
+                new User
+                {
+                    Email = "pauline@vandeale.be",
+                    Id = 3,
+                    Name = "pauline",
+                    Password = "BOE"
+                }
+            });
         }
     }
 }

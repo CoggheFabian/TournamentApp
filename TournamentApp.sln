@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TournamentApp.Services", "T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TournamentApp.UnitTests", "TournamentApp.UnitTests\TournamentApp.UnitTests.csproj", "{49636B22-8D48-4C8F-AAC9-E383277F26DB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TournamentApp.Shared", "TournamentApp.Shared\TournamentApp.Shared.csproj", "{4284B41C-077D-4070-8400-C4208604406A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{49636B22-8D48-4C8F-AAC9-E383277F26DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{49636B22-8D48-4C8F-AAC9-E383277F26DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{49636B22-8D48-4C8F-AAC9-E383277F26DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4284B41C-077D-4070-8400-C4208604406A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4284B41C-077D-4070-8400-C4208604406A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4284B41C-077D-4070-8400-C4208604406A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4284B41C-077D-4070-8400-C4208604406A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
