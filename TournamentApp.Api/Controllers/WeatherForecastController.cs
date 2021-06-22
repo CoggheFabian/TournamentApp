@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using TournamentApp.Model;
 using TournamentApp.Repositories.Interfaces;
+using TournamentApp.Shared.Dtos;
 
 namespace TournamentApp.Api.Controllers
 {
@@ -16,35 +17,18 @@ namespace TournamentApp.Api.Controllers
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
-        private readonly ITournamentRepository _repository;
+        private readonly IUserTournamentRepository _repository;
 
         //Testing out DI here
-        public WeatherForecastController(ITournamentRepository repository)
+        public WeatherForecastController(IUserTournamentRepository repository)
         {
             this._repository = repository;
         }
 
         [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
+        public IActionResult Get()
         {
-            //Again mock code, to see if it works. Im pushing this to main branc in order to show how it's done
-            _repository.Add(new Tournament
-            {
-                Date = DateTime.Now,
-                Id = 0,
-                Rounds = new List<Round>(),
-                TournamentName = "Boe"
-            });
-
-            _repository.Save();
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-                {
-                    Date = DateTime.Now.AddDays(index),
-                    TemperatureC = rng.Next(-20, 55),
-                    Summary = Summaries[rng.Next(Summaries.Length)]
-                })
-                .ToArray();
+            return Ok(_repository.GetAUserWithHisTournaments(1));
         }
     }
 }

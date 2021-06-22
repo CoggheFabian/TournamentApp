@@ -3,7 +3,7 @@ using EFCore.BulkExtensions;
 using TournamentApp.Model;
 using TournamentApp.Repositories.Interfaces;
 
-namespace TournamentApp.Repositories.Implementation.MatchRepository
+namespace TournamentApp.Repositories.Implementation.MatchRepo
 {
     public class MatchRepository : CrudRepository<Match>, IMatchRepository
     {

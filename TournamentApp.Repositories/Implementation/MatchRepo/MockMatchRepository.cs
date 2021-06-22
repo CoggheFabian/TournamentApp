@@ -3,7 +3,7 @@ using System.Linq;
 using TournamentApp.Model;
 using TournamentApp.Repositories.Interfaces;
 
-namespace TournamentApp.Repositories.Implementation.MatchRepository
+namespace TournamentApp.Repositories.Implementation.MatchRepo
 {
     public class MockMatchRepository : IMatchRepository
     {

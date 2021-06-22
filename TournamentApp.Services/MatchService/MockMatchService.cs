@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using TournamentApp.Model;
-using TournamentApp.Repositories.Implementation.MatchRepository;
+using TournamentApp.Repositories.Implementation.MatchRepo;
 using TournamentApp.Repositories.Interfaces;
 
 namespace TournamentApp.Services.MatchService
