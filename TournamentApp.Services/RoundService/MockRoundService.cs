@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using TournamentApp.Model;
 using TournamentApp.Repositories.Implementation.RoundRepo;
@@ -24,6 +25,11 @@ namespace TournamentApp.Services.RoundService
             }).First();
 
             return new MainRoundForTournamentDto {MainRoundId = mainRound.Id};
+        }
+
+        public List<TournamentWithAllRoundsDto> GetAllRoundFromATournament(int tournamentId)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

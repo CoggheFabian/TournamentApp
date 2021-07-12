@@ -85,10 +85,27 @@ namespace TournamentApp.Services.UserService
             foreach (var player in players) { yield return new PlayerInTournamentDto {Id = player.Id, UserName = player.Name}; }
         }
 
+        public List<GetUserDto> GetAllUsers()
+        {
+            var users = _userRepository.GetAll();
+            var usersDto = new List<GetUserDto>();
+            foreach (var vUser in users) { usersDto.Add(new GetUserDto {Email = vUser.Email, Id = vUser.Id, Username = vUser.Name}); }
+
+            return usersDto;
+        }
+
+        public Dictionary<string, int> GetLeaderBord()
+        {
+            return _userRepository.GetLeaderBord().ToDictionary(leaderboard => leaderboard.Name, leaderboard => leaderboard.Score );
+        }
+
+
         private List<int> GetPlayersIdsFromDto(List<PlayerInTournamentDto> playerInTournamentDtos)
         {
             return playerInTournamentDtos.Select(s => s.Id).ToList();
         }
+
+
     }
 
 }

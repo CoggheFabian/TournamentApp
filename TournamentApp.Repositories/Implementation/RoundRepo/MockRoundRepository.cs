@@ -55,5 +55,10 @@ namespace TournamentApp.Repositories.Implementation.RoundRepo
                 TournamentId = createdTournamentDto.Id
             });
         }
+
+        public IQueryable<Round> GetAllRoundFromATournament(int tournamentId)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

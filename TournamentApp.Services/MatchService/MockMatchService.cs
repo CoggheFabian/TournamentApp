@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using TournamentApp.Model;
 using TournamentApp.Repositories.Implementation.MatchRepo;
 using TournamentApp.Repositories.Interfaces;
+using TournamentApp.Shared.Dtos;
 
 namespace TournamentApp.Services.MatchService
 {
@@ -17,6 +18,11 @@ namespace TournamentApp.Services.MatchService
         public void BulkInsertMatches(List<Match> matchesToInsert)
         {
             _matchRepository.BulkInsertMatches(matchesToInsert);
+        }
+
+        public Dictionary<string, int> GetLeaderBord()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

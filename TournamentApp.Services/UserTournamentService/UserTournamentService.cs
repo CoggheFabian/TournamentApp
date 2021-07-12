@@ -1,15 +1,17 @@
 using System.Collections.Generic;
 using System.Linq;
-using TournamentApp.Repositories.Implementation.UserTournamentRepo;
 using TournamentApp.Shared.Dtos;
+using System;
+using System.Collections.Generic;
+using TournamentApp.Repositories.Interfaces;
 
 namespace TournamentApp.Services.UserTournamentService
 {
     public class UserTournamentService : IUserTournamentService
     {
-        private readonly UserTournamentRepository _userTournamentRepository;
+        private readonly IUserTournamentRepository _userTournamentRepository;
 
-        public UserTournamentService(UserTournamentRepository userTournamentRepository)
+        public UserTournamentService(IUserTournamentRepository userTournamentRepository)
         {
             _userTournamentRepository = userTournamentRepository;
         }
@@ -19,16 +21,16 @@ namespace TournamentApp.Services.UserTournamentService
             var tournaments = _userTournamentRepository.GetAUserWithHisTournaments(userId);
 
             var listOfMatches = new List<TournamentWithUserDto>();
-            foreach (var tournament in tournaments)
+            foreach (KeyValuePair<int, string> tournament in tournaments)
             {
-                listOfMatches.AddRange(tournament.(singleTournament => new TournamentWithUserDto {TournamentId = singleTournament.TournamentId, TournamentName = singleTournament.TournamentName}));
+                listOfMatches.Add(new TournamentWithUserDto
+                {
+                    TournamentId = tournament.Key,
+                    TournamentName = tournament.Value
+                });
             }
-
             var duplicatesValues = listOfMatches.GroupBy(tour => tour.TournamentId).Where(g => g.Count() > 1).Select(g => g.Key);
-            foreach (var duplicateId in duplicatesValues)
-            {
-                listOfMatches.RemoveAt(duplicateId);
-            }
+            listOfMatches.RemoveAll(item => duplicatesValues.Contains(item.TournamentId));
             return new UserWithHisTournamentsDto {TournamentWithUserDtos = listOfMatches};
         }
     }

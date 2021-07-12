@@ -17,15 +17,18 @@ namespace TournamentApp.Repositories.Implementation.UserTournamentRepo
             _context = context;
         }
 
-        public  IEnumerable<IGrouping<>> GetAUserWithHisTournaments(int userId)
+        public Dictionary<int, string> GetAUserWithHisTournaments(int userId)
         {
-
-            return (from match in _context.Matches
+            var boe =  (from match in _context.Matches
                     join c in _context.Rounds on match.RoundId equals c.Id
                     join tournament in _context.Tournaments on c.TournamentId equals tournament.Id
                     where match.Player1Id == userId || match.Player2Id == userId
                     select new {TournamentId = tournament.Id, tournament.TournamentName}).AsEnumerable()
-                .GroupBy(arg => arg.TournamentId);
+                .GroupBy(arg => arg.TournamentId) as Dictionary<int, string>;
+
+
+            Console.WriteLine("test");
+            return boe;
 
         }
     }

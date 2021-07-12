@@ -52,7 +52,5 @@ namespace TournamentApp.Api.Controllers
             if (res == null) { return Unauthorized(); }
             return Ok(res);
         }
-
-
     }
 }

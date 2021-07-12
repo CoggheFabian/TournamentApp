@@ -26,6 +26,8 @@ namespace TournamentApp.Model
         public DbSet<Tournament> Tournaments { get; set; }
         public DbSet<User> Users { get; set; }
 
+        public DbSet<Leaderboard> Leaderboards { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
@@ -80,6 +82,9 @@ namespace TournamentApp.Model
                 .WithMany()
                 .HasForeignKey(p => p.Player2Id);
 
+            modelBuilder.Entity<Leaderboard>().ToSqlQuery(
+                    "select U1.Name, sum(case when U1.Id = Matches.Player1Id then Matches.ScorePlayer1 else Matches.ScorePlayer2 end)  as score from Matches left join Users U1 on Matches.Player1Id = U1.Id or Matches.Player2Id = U1.Id group by U1.Name")
+                .HasNoKey();
 
             base.OnModelCreating(modelBuilder);
 

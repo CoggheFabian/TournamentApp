@@ -18,5 +18,9 @@ namespace TournamentApp.Services.UserService
 
         IEnumerable<PlayerInTournamentDto> GetPlayersForTournament(List<PlayerInTournamentDto> playerInTournamentDtos);
 
+        List<GetUserDto> GetAllUsers();
+
+        Dictionary<string, int> GetLeaderBord();
+
     }
 }

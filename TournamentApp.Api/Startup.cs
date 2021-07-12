@@ -22,6 +22,7 @@ using TournamentApp.Services.RoundService;
 using TournamentApp.Services.TournamentRoundService;
 using TournamentApp.Services.TournamentService;
 using TournamentApp.Services.UserService;
+using TournamentApp.Services.UserTournamentService;
 
 namespace TournamentApp.Api
 {
@@ -77,6 +78,7 @@ namespace TournamentApp.Api
             services.AddTransient<IMatchService, MatchService>();
 
             services.AddScoped<IUserTournamentRepository, UserTournamentRepository>();
+            services.AddTransient<IUserTournamentService, UserTournamentService>();
 
             services.AddScoped<IRoundRepository, RoundRepository>();
             services.AddTransient<IRoundService, RoundService>();

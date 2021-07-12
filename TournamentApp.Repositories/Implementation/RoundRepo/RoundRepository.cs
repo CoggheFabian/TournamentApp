@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using TournamentApp.Model;
@@ -22,6 +24,12 @@ namespace TournamentApp.Repositories.Implementation.RoundRepo
             {
                 Id = createdTournamentDto.Id
             });
+        }
+
+
+        public IQueryable<Round> GetAllRoundFromATournament(int tournamentId)
+        {
+            return GetAll().Where(round => round.TournamentId == tournamentId);
         }
 
     }

@@ -61,6 +61,11 @@ namespace TournamentApp.Repositories.Implementation.UserRepo
             return GetAll().ToList().Where(user => playersIds.Contains(user.Id));
         }
 
+        public IEnumerable<Leaderboard> GetLeaderBord()
+        {
+            throw new System.NotImplementedException();
+        }
+
         private void SeedPlayerDb()
         {
             _users.AddRange(new List<User>

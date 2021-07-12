@@ -41,8 +41,7 @@ namespace TournamentApp.Repositories.Implementation
 
         public IQueryable<T> GetAll()
         {
-            return _context.Set<T>().ToQueryable() as IQueryable<T>;
-
+            return _context.Set<T>().AsEnumerable() as IQueryable<T>;
         }
 
         public void Save()

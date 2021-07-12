@@ -89,6 +89,16 @@ namespace TournamentApp.Services.UserService
             foreach (var player in players) { yield return new PlayerInTournamentDto {Id = player.Id, UserName = player.Name}; }
         }
 
+        public List<GetUserDto> GetAllUsers()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Dictionary<string, int> GetLeaderBord()
+        {
+            throw new NotImplementedException();
+        }
+
         private List<int> GetPlayersIdsFromDto(List<PlayerInTournamentDto> playerInTournamentDtos)
         {
             return playerInTournamentDtos.Select(s => s.Id).ToList();
