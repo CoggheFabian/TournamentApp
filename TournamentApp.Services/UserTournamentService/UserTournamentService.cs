@@ -1,37 +1,39 @@
 using System.Collections.Generic;
-using System.Linq;
-using TournamentApp.Shared.Dtos;
-using System;
-using System.Collections.Generic;
+
 using TournamentApp.Repositories.Interfaces;
+using TournamentApp.Services.UserService;
+using TournamentApp.Shared.Dtos;
 
 namespace TournamentApp.Services.UserTournamentService
 {
     public class UserTournamentService : IUserTournamentService
     {
         private readonly IUserTournamentRepository _userTournamentRepository;
+        private readonly IUserService _userService;
 
-        public UserTournamentService(IUserTournamentRepository userTournamentRepository)
+        public UserTournamentService(IUserTournamentRepository userTournamentRepository, IUserService userService)
         {
             _userTournamentRepository = userTournamentRepository;
+            _userService = userService;
         }
 
-        public UserWithHisTournamentsDto GetAUserWithHisTournaments(int userId)
+        public Dictionary<int, string> GetAUserWithHisTournaments(int userId)
         {
-            var tournaments = _userTournamentRepository.GetAUserWithHisTournaments(userId);
+            Dictionary<int, string> tournaments = new Dictionary<int, string>();
+            var tournamentsQueryAble = _userTournamentRepository.GetAUserWithHisTournaments(userId);
 
-            var listOfMatches = new List<TournamentWithUserDto>();
-            foreach (KeyValuePair<int, string> tournament in tournaments)
+            foreach (var tournamentWithUserDto in tournamentsQueryAble)
             {
-                listOfMatches.Add(new TournamentWithUserDto
-                {
-                    TournamentId = tournament.Key,
-                    TournamentName = tournament.Value
-                });
+                if (!tournaments.ContainsKey(tournamentWithUserDto.TournamentId))
+                    tournaments.Add(tournamentWithUserDto.TournamentId, tournamentWithUserDto.TournamentName);
             }
-            var duplicatesValues = listOfMatches.GroupBy(tour => tour.TournamentId).Where(g => g.Count() > 1).Select(g => g.Key);
-            listOfMatches.RemoveAll(item => duplicatesValues.Contains(item.TournamentId));
-            return new UserWithHisTournamentsDto {TournamentWithUserDtos = listOfMatches};
+
+            return tournaments;
+        }
+
+        public UserWithHisTournamentsDto GetAUserWithHisDetailsAndTournaments(int userId)
+        {
+            return new UserWithHisTournamentsDto {Tournaments = GetAUserWithHisTournaments(userId), User = _userService.FindUserById(userId)};
         }
     }
 }

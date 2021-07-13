@@ -7,6 +7,6 @@ namespace TournamentApp.Repositories.Interfaces
 {
     public interface IUserTournamentRepository
     {
-        Dictionary<int, string> GetAUserWithHisTournaments(int userId);
+        IQueryable<TournamentWithUserDto> GetAUserWithHisTournaments(int userId);
     }
 }

@@ -59,25 +59,18 @@ namespace TournamentApp.Services.UserService
         public LoggedInUserDto Login(UserLoginDto userLoginDto)
         {
             User user;
-            try
-            {
-                user = _mockUserRepository.GetUsersByEmail(userLoginDto.Email).First();
-            }
-            catch (InvalidOperationException e)
-            {
-                return null;
-            }
+            try { user = _mockUserRepository.GetUsersByEmail(userLoginDto.Email).First(); }
+            catch (InvalidOperationException e) { return null; }
 
             if (BCrypt.Net.BCrypt.Verify(userLoginDto.Password, user.Password)) //Need to check on this
             {
-                return new LoggedInUserDto
-                    {Email = user.Email, Token = TokenService.CreateToken(user), Username = user.Name};
+                return new LoggedInUserDto {Email = user.Email, Token = TokenService.CreateToken(user), Username = user.Name};
             }
 
             return null;
         }
 
-        public User FindUserById(int id)
+        public GetUserDto FindUserById(int id)
         {
             throw new NotImplementedException();
         }

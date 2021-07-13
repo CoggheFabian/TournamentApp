@@ -14,7 +14,7 @@ namespace TournamentApp.Services.UserService
 
         LoggedInUserDto Login(UserLoginDto userLoginDto);
 
-        User FindUserById(int id);
+        GetUserDto FindUserById(int id);
 
         IEnumerable<PlayerInTournamentDto> GetPlayersForTournament(List<PlayerInTournamentDto> playerInTournamentDtos);
 

@@ -18,22 +18,10 @@ namespace TournamentApp.Services.UserService
 
         public CreatedUserDto Register(UserRegisterDto userRegisterDto)
         {
-            var user = _userRepository.Add(new User()
-            {
-                Name = userRegisterDto.Username.ToLower(),
-                Password = BCrypt.Net.BCrypt.HashPassword(userRegisterDto.Password),
-                Email = userRegisterDto.Email.ToLower()
-            }).First();
-
+            var user = _userRepository.Add(new User {Name = userRegisterDto.Username.ToLower(), Password = BCrypt.Net.BCrypt.HashPassword(userRegisterDto.Password), Email = userRegisterDto.Email.ToLower()})
+                .First();
             _userRepository.Save();
-
-            return new CreatedUserDto()
-            {
-                Email = userRegisterDto.Email,
-                Token = TokenService.CreateToken(user),
-                Username = userRegisterDto.Username,
-                UserId = user.Id,
-            };
+            return new CreatedUserDto {Email = userRegisterDto.Email, Token = TokenService.CreateToken(user), Username = userRegisterDto.Username, UserId = user.Id,};
         }
 
         public bool CheckIfEmailIsAlreadyRegistered(string email)
@@ -45,16 +33,7 @@ namespace TournamentApp.Services.UserService
         public GetUserDto GetUserByEmail(string email)
         {
             var userFromRepo = _userRepository.GetUsersByEmail(email).First();
-            if (userFromRepo != null)
-            {
-                return new GetUserDto
-                {
-                    Email = email,
-                    Username = userFromRepo.Name
-                };
-            }
-            return null;
-
+            return userFromRepo != null ? new GetUserDto {Email = email, Username = userFromRepo.Name} : null;
         }
 
 
@@ -63,19 +42,13 @@ namespace TournamentApp.Services.UserService
             User user;
             try { user = _userRepository.GetUsersByEmail(userLoginDto.Email).First(); }
             catch (InvalidOperationException e) { return null; }
-
-            var res = BCrypt.Net.BCrypt.Verify(userLoginDto.Password, user.Password);
-            if (BCrypt.Net.BCrypt.Verify(userLoginDto.Password, user.Password)) //Need to check on this
-            {
-                return new LoggedInUserDto {Email = user.Email, Token = TokenService.CreateToken(user), Username = user.Name};
-            }
-
-            return null;
+            return BCrypt.Net.BCrypt.Verify(userLoginDto.Password, user.Password) ? new LoggedInUserDto {Email = user.Email, Token = TokenService.CreateToken(user), Username = user.Name} : null;
         }
 
-        public User FindUserById(int id)
+        public GetUserDto FindUserById(int id)
         {
-            return _userRepository.Get(id).First();
+            var user = _userRepository.Get(id).First();
+            return new GetUserDto {Email = user.Email, Id = user.Id, Username = user.Name};
         }
 
         public IEnumerable<PlayerInTournamentDto> GetPlayersForTournament(List<PlayerInTournamentDto> playerInTournamentDtos)
@@ -89,8 +62,7 @@ namespace TournamentApp.Services.UserService
         {
             var users = _userRepository.GetAll();
             var usersDto = new List<GetUserDto>();
-            foreach (var vUser in users) { usersDto.Add(new GetUserDto {Email = vUser.Email, Id = vUser.Id, Username = vUser.Name}); }
-
+            foreach (var user in users) { usersDto.Add(new GetUserDto {Email = user.Email, Id = user.Id, Username = user.Name}); }
             return usersDto;
         }
 
