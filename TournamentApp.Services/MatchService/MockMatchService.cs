@@ -20,9 +20,5 @@ namespace TournamentApp.Services.MatchService
             _matchRepository.BulkInsertMatches(matchesToInsert);
         }
 
-        public Dictionary<string, int> GetLeaderBord()
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }

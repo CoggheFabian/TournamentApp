@@ -63,8 +63,16 @@ namespace TournamentApp.Repositories.Implementation.UserRepo
 
         public IEnumerable<Leaderboard> GetLeaderBord()
         {
-            throw new System.NotImplementedException();
+            var leaderboards = new List<Leaderboard>
+            {
+                new() {Name = "Pol", Score = 5},
+                new() {Name = "Thijs", Score = 20},
+                new() {Name = "Nico", Score = 10}
+            };
+
+            return leaderboards;
         }
+
 
         private void SeedPlayerDb()
         {

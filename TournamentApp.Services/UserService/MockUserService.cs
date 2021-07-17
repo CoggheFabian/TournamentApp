@@ -89,7 +89,8 @@ namespace TournamentApp.Services.UserService
 
         public Dictionary<string, int> GetLeaderBord()
         {
-            throw new NotImplementedException();
+            return _mockUserRepository.GetLeaderBord()
+                .ToDictionary(leaderboard => leaderboard.Name, leaderboard => leaderboard.Score);
         }
 
         private List<int> GetPlayersIdsFromDto(List<PlayerInTournamentDto> playerInTournamentDtos)

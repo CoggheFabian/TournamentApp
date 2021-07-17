@@ -29,7 +29,11 @@ namespace TournamentApp.Services.RoundService
 
         public List<TournamentWithAllRoundsDto> GetAllRoundFromATournament(int tournamentId)
         {
-            throw new System.NotImplementedException();
+            var rounds = _roundRepository.GetAllRoundFromATournament(tournamentId).ToList();
+
+            return rounds.Select(round => new TournamentWithAllRoundsDto
+                    {RoundId = round.Id, LoserNodeId = round.LoserNodeId, PreviousRoundId = round.PreviousRoundId, WinnerNodeId = round.WinnerNodeId, NodeSubRoundId = round.NodeSubRoundId})
+                .ToList();
         }
     }
 }

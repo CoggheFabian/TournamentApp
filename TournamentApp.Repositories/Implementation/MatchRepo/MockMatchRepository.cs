@@ -51,10 +51,5 @@ namespace TournamentApp.Repositories.Implementation.MatchRepo
         {
             _matches.AddRange(matches);
         }
-
-        public IEnumerable<Leaderboard> GetLeaderBord()
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }

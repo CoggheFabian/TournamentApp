@@ -13,6 +13,5 @@ namespace TournamentApp.Repositories.Interfaces
 
         IEnumerable<Leaderboard> GetLeaderBord();
 
-
     }
 }
