@@ -18,11 +18,11 @@ namespace TournamentApp.Repositories.Implementation.RoundRepo
         }
 
 
-        public IQueryable<QuizRound> MakeMainRoundForTournament(CreatedTournamentDto createdTournamentDto)
+        public IQueryable<QuizRound> MakeMainRoundForTournament(CreatedQuizDto createdQuizDto)
         {
             return Add(new QuizRound
             {
-                Id = createdTournamentDto.Id
+                Id = createdQuizDto.Id
             });
         }
 

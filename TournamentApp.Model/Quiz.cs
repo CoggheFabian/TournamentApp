@@ -9,7 +9,7 @@ namespace TournamentApp.Model
         public string QuizName { get; set; }
         public DateTime Date { get; set; }
 
-        public User QuizOwner { get; set; }
+        public int QuizOwnerId { get; set; }
 
         [JsonIgnore] public List<QuizRound> Rounds { get; set; }
     }

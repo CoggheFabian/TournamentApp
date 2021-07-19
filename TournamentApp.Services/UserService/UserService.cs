@@ -33,7 +33,7 @@ namespace TournamentApp.Services.UserService
         public GetUserDto GetUserByEmail(string email)
         {
             var userFromRepo = _userRepository.GetUsersByEmail(email).First();
-            return userFromRepo != null ? new GetUserDto {Email = email, Username = userFromRepo.Name} : null;
+            return userFromRepo != null ? new GetUserDto {Email = email, Username = userFromRepo.Name, Id = userFromRepo.Id} : null;
         }
 
 
@@ -51,10 +51,10 @@ namespace TournamentApp.Services.UserService
             return new GetUserDto {Email = user.Email, Id = user.Id, Username = user.Name};
         }
 
-        public IEnumerable<PlayerInQuizDto> GetPlayersForTournament(List<PlayerInQuizDto> playerInTournamentDtos)
+        public IEnumerable<PlayerInQuizDto> GetPlayersForQuiz(List<PlayerInQuizDto> playerInTournamentDtos)
         {
             var playerIds = GetPlayersIdsFromDto(playerInTournamentDtos);
-            var players = _userRepository.GetPlayersForTournament(playerIds).ToList();
+            var players = _userRepository.GetPlayersForQuiz(playerIds).ToList();
             foreach (var player in players) { yield return new PlayerInQuizDto {Id = player.Id, UserName = player.Name}; }
         }
 

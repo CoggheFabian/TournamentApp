@@ -16,11 +16,11 @@ namespace TournamentApp.Services.RoundService
         }
 
 
-        public MainRoundForTournamentDto AddMainRoundForTournament(CreatedTournamentDto addedTournament)
+        public MainRoundForTournamentDto AddMainRoundForTournament(CreatedQuizDto addedQuiz)
         {
             var mainRound = _roundRepository.Add(new QuizRound
             {
-                QuizId = addedTournament.Id
+                QuizId = addedQuiz.Id
             }).First();
 
             _roundRepository.Save();

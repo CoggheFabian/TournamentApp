@@ -75,10 +75,10 @@ namespace TournamentApp.Services.UserService
             throw new NotImplementedException();
         }
 
-        public IEnumerable<PlayerInQuizDto> GetPlayersForTournament(List<PlayerInQuizDto> playerInTournamentDtos)
+        public IEnumerable<PlayerInQuizDto> GetPlayersForQuiz(List<PlayerInQuizDto> playerInTournamentDtos)
         {
             var playerIds = GetPlayersIdsFromDto(playerInTournamentDtos);
-            var players = _mockUserRepository.GetPlayersForTournament(playerIds).ToList();
+            var players = _mockUserRepository.GetPlayersForQuiz(playerIds).ToList();
             foreach (var player in players) { yield return new PlayerInQuizDto {Id = player.Id, UserName = player.Name}; }
         }
 

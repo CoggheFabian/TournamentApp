@@ -11,16 +11,16 @@ using Microsoft.OpenApi.Models;
 using TournamentApp.Model;
 using TournamentApp.Model.ConfigManager;
 using TournamentApp.Repositories.Implementation.MatchRepo;
+using TournamentApp.Repositories.Implementation.QuizRepo;
 using TournamentApp.Repositories.Implementation.RoundRepo;
-using TournamentApp.Repositories.Implementation.TournamentRepo;
 using TournamentApp.Repositories.Implementation.UserRepo;
 using TournamentApp.Repositories.Implementation.UserTournamentRepo;
 using TournamentApp.Repositories.Interfaces;
 using TournamentApp.Services.Config;
 using TournamentApp.Services.MatchService;
+using TournamentApp.Services.QuizService;
 using TournamentApp.Services.RoundService;
 using TournamentApp.Services.TournamentRoundService;
-using TournamentApp.Services.TournamentService;
 using TournamentApp.Services.UserService;
 using TournamentApp.Services.UserTournamentService;
 
@@ -67,12 +67,12 @@ namespace TournamentApp.Api
             });
 
             services.AddScoped<IQuizRepository, QuizRepository>();
-            services.AddTransient<ITournamentService, TournamentService>();
+            services.AddTransient<IQuizService, QuizService>();
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddTransient<IUserService, UserService>();
 
-            services.AddScoped<ITournamentRoundService, TournamentRoundService>();
+            services.AddScoped<IQuizRoundService, QuizRoundService>();
 
             services.AddScoped<IMatchRepository, MatchRepository>();
             services.AddTransient<IMatchService, MatchService>();

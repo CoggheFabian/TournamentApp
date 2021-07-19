@@ -56,7 +56,7 @@ namespace TournamentApp.Repositories.Implementation.UserRepo
             return _users.Where(user => user.Email == email).AsQueryable();
         }
 
-        public IEnumerable<User> GetPlayersForTournament(List<int> playersIds)
+        public IEnumerable<User> GetPlayersForQuiz(List<int> playersIds)
         {
             return GetAll().ToList().Where(user => playersIds.Contains(user.Id));
         }

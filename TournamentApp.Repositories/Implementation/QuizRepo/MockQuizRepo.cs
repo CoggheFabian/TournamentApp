@@ -3,31 +3,31 @@ using System.Linq;
 using TournamentApp.Model;
 using TournamentApp.Repositories.Interfaces;
 
-namespace TournamentApp.Repositories.Implementation.TournamentRepo
+namespace TournamentApp.Repositories.Implementation.QuizRepo
 {
     public class MockQuizRepo : IQuizRepository
     {
-        private List<Quiz> _tournaments;
+        private List<Quiz> _quizzes;
 
         public MockQuizRepo()
         {
-            _tournaments = new List<Quiz>();
+            _quizzes = new List<Quiz>();
         }
         public IQueryable<Quiz> Get(int id)
         {
-            return _tournaments.Where(tournament => tournament.Id == id).AsQueryable();
+            return _quizzes.Where(tournament => tournament.Id == id).AsQueryable();
         }
 
         public IQueryable<Quiz> Add(Quiz entity)
         {
-            _tournaments.Add(entity);
+            _quizzes.Add(entity);
             return entity.ToQueryable();
         }
 
         public IQueryable<Quiz> Delete(int id)
         {
             var tournamentToRemove = Get(id);
-            _tournaments.Remove(tournamentToRemove.First());
+            _quizzes.Remove(tournamentToRemove.First());
             return tournamentToRemove;
         }
 
@@ -38,7 +38,7 @@ namespace TournamentApp.Repositories.Implementation.TournamentRepo
 
         public IQueryable<Quiz> GetAll()
         {
-            return _tournaments.AsQueryable();
+            return _quizzes.AsQueryable();
         }
 
         public void Save()

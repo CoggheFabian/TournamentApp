@@ -9,7 +9,7 @@ namespace TournamentApp.Repositories.Interfaces
     {
         IQueryable<User> GetUsersByEmail(string email);
 
-        IEnumerable<User> GetPlayersForTournament(List<int> playersIds);
+        IEnumerable<User> GetPlayersForQuiz(List<int> playersIds);
 
         IEnumerable<Leaderboard> GetLeaderBord();
 

@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TournamentApp.Services.RoundService;
@@ -9,20 +10,22 @@ namespace TournamentApp.Api.Controllers
     [Route("api/quizzes")]
     public class QuizController: ControllerBase
     {
-        private readonly ITournamentRoundService _tournamentRoundService;
+        private readonly IQuizRoundService _quizRoundService;
         private readonly IRoundService _roundService;
-        public QuizController(ITournamentRoundService tournamentService, IRoundService roundService)
+        public QuizController(IQuizRoundService quizService, IRoundService roundService)
         {
-            _tournamentRoundService = tournamentService;
+            _quizRoundService = quizService;
             _roundService = roundService;
         }
 
         [HttpPost]
         [Authorize]
-        public ActionResult CreateTournamentWithMainRounds([FromBody] CreateQuizDto createQuizDto)
+        public IActionResult CreateTournamentWithMainRounds([FromBody] CreateQuizDto createQuizDto)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            return Ok(_tournamentRoundService.CreateTournamentWithMainRounds(createQuizDto));
+            var createdQuizDto = _quizRoundService.CreateQuiz(createQuizDto, User.FindFirst(ClaimTypes.Email)?.Value);
+            if (createdQuizDto == null) return BadRequest("A quiz owner can't be a player");
+            return Ok(createQuizDto);
         }
 
         [HttpGet]

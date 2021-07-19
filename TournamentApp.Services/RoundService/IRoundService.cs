@@ -5,7 +5,7 @@ namespace TournamentApp.Services.RoundService
 {
     public interface IRoundService
     {
-        public MainRoundForTournamentDto AddMainRoundForTournament(CreatedTournamentDto addedTournament);
+        public MainRoundForTournamentDto AddMainRoundForTournament(CreatedQuizDto addedQuiz);
 
         List<TournamentWithAllRoundsDto> GetAllRoundFromATournament(int tournamentId);
 

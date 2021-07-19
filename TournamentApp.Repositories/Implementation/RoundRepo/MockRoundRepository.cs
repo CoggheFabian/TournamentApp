@@ -54,11 +54,11 @@ namespace TournamentApp.Repositories.Implementation.RoundRepo
             throw new System.NotImplementedException();
         }
 
-        public IQueryable<QuizRound> MakeMainRoundForTournament(CreatedTournamentDto createdTournamentDto)
+        public IQueryable<QuizRound> MakeMainRoundForTournament(CreatedQuizDto createdQuizDto)
         {
             return Add(new QuizRound
             {
-                QuizId = createdTournamentDto.Id
+                QuizId = createdQuizDto.Id
             });
         }
 

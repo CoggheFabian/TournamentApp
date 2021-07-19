@@ -8,7 +8,7 @@ namespace TournamentApp.Repositories.Interfaces
 {
     public interface IRoundRepository : ICrudRepository<QuizRound>
     {
-        IQueryable<QuizRound> MakeMainRoundForTournament(CreatedTournamentDto createdTournamentDto);
+        IQueryable<QuizRound> MakeMainRoundForTournament(CreatedQuizDto createdQuizDto);
         IQueryable<QuizRound> GetAllRoundFromATournament(int tournamentId);
 
     }
