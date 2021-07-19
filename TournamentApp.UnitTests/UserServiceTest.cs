@@ -79,6 +79,17 @@ namespace TournamentApp.UnitTests
             Assert.Null(loggedInUserNull);
         }
 
+        [Fact]
+        public void CheckLeaderBoardsIfCorrect()
+        {
+            _mockUserService = new MockUserService();
+
+            var leaderBord = _mockUserService.GetLeaderBord();
+
+            Assert.True(leaderBord.ContainsKey("Thijs"));
+            Assert.True(leaderBord.ContainsValue(20));
+        }
+
 
 
     }

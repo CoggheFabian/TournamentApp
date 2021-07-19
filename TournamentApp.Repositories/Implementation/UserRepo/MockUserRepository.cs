@@ -61,6 +61,19 @@ namespace TournamentApp.Repositories.Implementation.UserRepo
             return GetAll().ToList().Where(user => playersIds.Contains(user.Id));
         }
 
+        public IEnumerable<Leaderboard> GetLeaderBord()
+        {
+            var leaderboards = new List<Leaderboard>
+            {
+                new() {Name = "Pol", Score = 5},
+                new() {Name = "Thijs", Score = 20},
+                new() {Name = "Nico", Score = 10}
+            };
+
+            return leaderboards;
+        }
+
+
         private void SeedPlayerDb()
         {
             _users.AddRange(new List<User>

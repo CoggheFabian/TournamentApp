@@ -1,6 +1,9 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using TournamentApp.Model;
 using TournamentApp.Repositories.Interfaces;
+using TournamentApp.Shared.Dtos;
 
 namespace TournamentApp.Services.MatchService
 {
@@ -17,5 +20,7 @@ namespace TournamentApp.Services.MatchService
         {
             _matchRepository.BulkInsertMatches(matchesToInsert);
         }
+
+
     }
 }

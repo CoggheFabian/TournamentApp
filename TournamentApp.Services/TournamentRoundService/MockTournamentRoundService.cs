@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Combinatorics.Collections;
 using TournamentApp.Model;
-using TournamentApp.Repositories.Implementation.MatchRepository;
 using TournamentApp.Repositories.Implementation.RoundRepo;
 using TournamentApp.Repositories.Implementation.TournamentRepo;
 using TournamentApp.Services.MatchService;

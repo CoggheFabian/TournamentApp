@@ -121,7 +121,6 @@ namespace TournamentApp.UnitTests
                 }));
 
             Assert.Throws<ArgumentOutOfRangeException>(act);
-
         }
     }
 }

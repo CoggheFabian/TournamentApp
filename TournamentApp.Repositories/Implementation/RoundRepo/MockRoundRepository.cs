@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TournamentApp.Model;
@@ -12,7 +13,12 @@ namespace TournamentApp.Repositories.Implementation.RoundRepo
 
         public MockRoundRepository()
         {
-            _rounds = new List<Round>();
+            _rounds = new List<Round>
+            {
+                new() {Id = 1, Tournament = new Tournament {Id = 1, Date = DateTime.Now, TournamentName = "boe"}, TournamentId = 1,},
+                new() {Id = 2, Tournament = new Tournament {Id = 1, Date = DateTime.Now, TournamentName = "boe"}, TournamentId = 1,}
+            };
+
         }
 
         public IQueryable<Round> Get(int id)
@@ -54,6 +60,11 @@ namespace TournamentApp.Repositories.Implementation.RoundRepo
             {
                 TournamentId = createdTournamentDto.Id
             });
+        }
+
+        public IQueryable<Round> GetAllRoundFromATournament(int tournamentId)
+        {
+            return _rounds.Where(round => round.TournamentId == tournamentId).AsQueryable();
         }
     }
 }

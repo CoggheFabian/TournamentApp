@@ -59,25 +59,18 @@ namespace TournamentApp.Services.UserService
         public LoggedInUserDto Login(UserLoginDto userLoginDto)
         {
             User user;
-            try
-            {
-                user = _mockUserRepository.GetUsersByEmail(userLoginDto.Email).First();
-            }
-            catch (InvalidOperationException e)
-            {
-                return null;
-            }
+            try { user = _mockUserRepository.GetUsersByEmail(userLoginDto.Email).First(); }
+            catch (InvalidOperationException e) { return null; }
 
             if (BCrypt.Net.BCrypt.Verify(userLoginDto.Password, user.Password)) //Need to check on this
             {
-                return new LoggedInUserDto
-                    {Email = user.Email, Token = TokenService.CreateToken(user), Username = user.Name};
+                return new LoggedInUserDto {Email = user.Email, Token = TokenService.CreateToken(user), Username = user.Name};
             }
 
             return null;
         }
 
-        public User FindUserById(int id)
+        public GetUserDto FindUserById(int id)
         {
             throw new NotImplementedException();
         }
@@ -87,6 +80,17 @@ namespace TournamentApp.Services.UserService
             var playerIds = GetPlayersIdsFromDto(playerInTournamentDtos);
             var players = _mockUserRepository.GetPlayersForTournament(playerIds).ToList();
             foreach (var player in players) { yield return new PlayerInTournamentDto {Id = player.Id, UserName = player.Name}; }
+        }
+
+        public List<GetUserDto> GetAllUsers()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Dictionary<string, int> GetLeaderBord()
+        {
+            return _mockUserRepository.GetLeaderBord()
+                .ToDictionary(leaderboard => leaderboard.Name, leaderboard => leaderboard.Score);
         }
 
         private List<int> GetPlayersIdsFromDto(List<PlayerInTournamentDto> playerInTournamentDtos)

@@ -48,11 +48,15 @@ namespace TournamentApp.Api.Controllers
         {
             var loggedInUserHisEmail = HttpContext.User.Claims
                 .FirstOrDefault(c => c.Type.Equals(ClaimTypes.Email, StringComparison.OrdinalIgnoreCase))?.Value;
-            var res  = _userService.GetUserByEmail(loggedInUserHisEmail);
-            if (res == null) { return Unauthorized(); }
-            return Ok(res);
+            var userOrEmail  = _userService.GetUserByEmail(loggedInUserHisEmail);
+            if (userOrEmail == null) { return Unauthorized(); }
+            return Ok(userOrEmail);
         }
 
-
+        [HttpGet]
+        public IActionResult GetUsers()
+        {
+            return Ok(_userService.GetAllUsers());
+        }
     }
 }

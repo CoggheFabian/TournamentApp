@@ -11,5 +11,7 @@ namespace TournamentApp.Repositories.Interfaces
 
         IEnumerable<User> GetPlayersForTournament(List<int> playersIds);
 
+        IEnumerable<Leaderboard> GetLeaderBord();
+
     }
 }

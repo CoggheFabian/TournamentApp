@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using TournamentApp.Model;
 using TournamentApp.Repositories.Interfaces;
@@ -24,6 +25,15 @@ namespace TournamentApp.Services.RoundService
 
             _roundRepository.Save();
             return new MainRoundForTournamentDto {MainRoundId = mainRound.Id};
+        }
+
+        public List<TournamentWithAllRoundsDto> GetAllRoundFromATournament(int tournamentId)
+        {
+            var rounds = _roundRepository.GetAllRoundFromATournament(tournamentId).ToList();
+
+            return rounds.Select(round => new TournamentWithAllRoundsDto
+                {RoundId = round.Id, LoserNodeId = round.LoserNodeId, PreviousRoundId = round.PreviousRoundId, WinnerNodeId = round.WinnerNodeId, NodeSubRoundId = round.NodeSubRoundId})
+                .ToList();
         }
     }
 }
