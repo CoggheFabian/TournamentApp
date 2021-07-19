@@ -28,11 +28,11 @@ namespace TournamentApp.Services.TournamentRoundService
         }
 
 
-        public CreatedTournamentDto CreateTournamentWithMainRounds(CreateTournamentDto createTournamentDto)
+        public CreatedTournamentDto CreateTournamentWithMainRounds(CreateQuizDto createQuizDto)
         {
-            var addedTournament = _mockTournamentService.AddTournament(createTournamentDto);
-            var playerInTournamentDtos = GetPlayersForTournament(createTournamentDto.Players);
-            var combinationsPlayers = new Combinations<PlayerInTournamentDto>(playerInTournamentDtos, 2);
+            var addedTournament = _mockTournamentService.AddTournament(createQuizDto);
+            var playerInTournamentDtos = GetPlayersForTournament(createQuizDto.Players);
+            var combinationsPlayers = new Combinations<PlayerInQuizDto>(playerInTournamentDtos, 2);
             var mainRound = _mockRoundService.AddMainRoundForTournament(addedTournament);
             var playableMatches = GenerateMatchesBasedOnPlayerCombination(combinationsPlayers, mainRound.MainRoundId );
             _mockMatchService.BulkInsertMatches(playableMatches.ToList());
@@ -40,13 +40,13 @@ namespace TournamentApp.Services.TournamentRoundService
                                              TournamentDate = addedTournament.TournamentDate, MainRoundForTournament = mainRound };
         }
 
-        private IEnumerable<PlayerInTournamentDto> GetPlayersForTournament(List<PlayerInTournamentDto> playerInTournamentDtos)
+        private IEnumerable<PlayerInQuizDto> GetPlayersForTournament(List<PlayerInQuizDto> playerInTournamentDtos)
         {
             var users = _mockUserService.GetPlayersForTournament(playerInTournamentDtos);
-            foreach (var playerInTournamentDto in users) { yield return new PlayerInTournamentDto {Id = playerInTournamentDto.Id, UserName = playerInTournamentDto.UserName}; }
+            foreach (var playerInTournamentDto in users) { yield return new PlayerInQuizDto {Id = playerInTournamentDto.Id, UserName = playerInTournamentDto.UserName}; }
         }
 
-        private IEnumerable<Match> GenerateMatchesBasedOnPlayerCombination(Combinations<PlayerInTournamentDto> playersCombination, int roundId)
+        private IEnumerable<Match> GenerateMatchesBasedOnPlayerCombination(Combinations<PlayerInQuizDto> playersCombination, int roundId)
         {
             foreach (var playerInMatch in playersCombination)
             {

@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TournamentApp.Shared.Dtos
 {
-    public class PlayerInTournamentDto : DtoBase
+    public class PlayerInQuizDto : DtoBase
     {
         [Required]
         public int Id { get; set; }

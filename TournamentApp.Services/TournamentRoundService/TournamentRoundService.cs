@@ -24,11 +24,11 @@ namespace TournamentApp.Services.TournamentRoundService
             _roundService = roundService;
         }
 
-        public CreatedTournamentDto CreateTournamentWithMainRounds(CreateTournamentDto createTournamentDto)
+        public CreatedTournamentDto CreateTournamentWithMainRounds(CreateQuizDto createQuizDto)
         {
-            var addedTournament = _tournamentService.AddTournament(createTournamentDto);
-            var playerInTournamentDtos = GetPlayersForTournament(createTournamentDto.Players);
-            var combinationsPlayers = new Combinations<PlayerInTournamentDto>(playerInTournamentDtos, 2);
+            var addedTournament = _tournamentService.AddTournament(createQuizDto);
+            var playerInTournamentDtos = GetPlayersForTournament(createQuizDto.Players);
+            var combinationsPlayers = new Combinations<PlayerInQuizDto>(playerInTournamentDtos, 2);
             var mainRound = _roundService.AddMainRoundForTournament(addedTournament);
             var playableMatches = GenerateMatchesBasedOnPlayerCombination(combinationsPlayers, mainRound.MainRoundId );
             _matchService.BulkInsertMatches(playableMatches.ToList());
@@ -37,7 +37,7 @@ namespace TournamentApp.Services.TournamentRoundService
 
         }
 
-        private IEnumerable<Match> GenerateMatchesBasedOnPlayerCombination(Combinations<PlayerInTournamentDto> playersCombination, int roundId)
+        private IEnumerable<Match> GenerateMatchesBasedOnPlayerCombination(Combinations<PlayerInQuizDto> playersCombination, int roundId)
         {
             foreach (var playerInMatch in playersCombination)
             {
@@ -53,13 +53,13 @@ namespace TournamentApp.Services.TournamentRoundService
             }
         }
 
-        public IEnumerable<PlayerInTournamentDto> GetPlayersForTournament(List<PlayerInTournamentDto> playerInTournamentDtos)
+        public IEnumerable<PlayerInQuizDto> GetPlayersForTournament(List<PlayerInQuizDto> playerInTournamentDtos)
         {
             var users = _userService.GetPlayersForTournament(playerInTournamentDtos);
 
             foreach (var playerInTournamentDto in users)
             {
-                yield return new PlayerInTournamentDto {Id = playerInTournamentDto.Id, UserName = playerInTournamentDto.UserName};
+                yield return new PlayerInQuizDto {Id = playerInTournamentDto.Id, UserName = playerInTournamentDto.UserName};
             }
         }
 

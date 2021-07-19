@@ -16,22 +16,22 @@ namespace TournamentApp.UnitTests
         {
             _tournamentRoundService = new MockTournamentRoundService();
 
-            CreatedTournamentDto createdTournament =  _tournamentRoundService.CreateTournamentWithMainRounds(new CreateTournamentDto
+            CreatedTournamentDto createdTournament =  _tournamentRoundService.CreateTournamentWithMainRounds(new CreateQuizDto
             {
                 Name = "Boe",
-                Players = new List<PlayerInTournamentDto>
+                Players = new List<PlayerInQuizDto>
                 {
-                    new PlayerInTournamentDto
+                    new PlayerInQuizDto
                     {
                         Id = 1,
                         UserName = "fabian"
                     },
-                    new PlayerInTournamentDto
+                    new PlayerInQuizDto
                     {
                         Id = 2,
                         UserName = "thijs"
                     },
-                    new PlayerInTournamentDto
+                    new PlayerInQuizDto
                     {
                         Id = 3,
                         UserName = "pauline"
@@ -49,22 +49,22 @@ namespace TournamentApp.UnitTests
         {
             _tournamentRoundService = new MockTournamentRoundService();
 
-            CreatedTournamentDto createdTournament =  _tournamentRoundService.CreateTournamentWithMainRounds(new CreateTournamentDto
+            CreatedTournamentDto createdTournament =  _tournamentRoundService.CreateTournamentWithMainRounds(new CreateQuizDto
             {
                 Name = "Boe",
-                Players = new List<PlayerInTournamentDto>
+                Players = new List<PlayerInQuizDto>
                 {
-                    new PlayerInTournamentDto
+                    new PlayerInQuizDto
                     {
                         Id = 1,
                         UserName = "fabian"
                     },
-                    new PlayerInTournamentDto
+                    new PlayerInQuizDto
                     {
                         Id = 2,
                         UserName = "thijs"
                     },
-                    new PlayerInTournamentDto
+                    new PlayerInQuizDto
                     {
                         Id = 4,
                         UserName = "joey"
@@ -83,12 +83,12 @@ namespace TournamentApp.UnitTests
             _tournamentRoundService = new MockTournamentRoundService();
 
             var act = new Func<CreatedTournamentDto>(() => _tournamentRoundService.CreateTournamentWithMainRounds(
-                new CreateTournamentDto
+                new CreateQuizDto
                 {
                     Name = "Boe",
-                    Players = new List<PlayerInTournamentDto>
+                    Players = new List<PlayerInQuizDto>
                     {
-                        new PlayerInTournamentDto
+                        new PlayerInQuizDto
                         {
                             Id = 1,
                             UserName = "fabian"
@@ -106,12 +106,12 @@ namespace TournamentApp.UnitTests
             _tournamentRoundService = new MockTournamentRoundService();
 
             var act = new Func<CreatedTournamentDto>(() => _tournamentRoundService.CreateTournamentWithMainRounds(
-                new CreateTournamentDto
+                new CreateQuizDto
                 {
                     Name = "Boe",
-                    Players = new List<PlayerInTournamentDto>
+                    Players = new List<PlayerInQuizDto>
                     {
-                        new PlayerInTournamentDto
+                        new PlayerInQuizDto
                         {
                             Id = 1,
                             UserName = "joey"

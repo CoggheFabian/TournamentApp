@@ -75,11 +75,11 @@ namespace TournamentApp.Services.UserService
             throw new NotImplementedException();
         }
 
-        public IEnumerable<PlayerInTournamentDto> GetPlayersForTournament(List<PlayerInTournamentDto> playerInTournamentDtos)
+        public IEnumerable<PlayerInQuizDto> GetPlayersForTournament(List<PlayerInQuizDto> playerInTournamentDtos)
         {
             var playerIds = GetPlayersIdsFromDto(playerInTournamentDtos);
             var players = _mockUserRepository.GetPlayersForTournament(playerIds).ToList();
-            foreach (var player in players) { yield return new PlayerInTournamentDto {Id = player.Id, UserName = player.Name}; }
+            foreach (var player in players) { yield return new PlayerInQuizDto {Id = player.Id, UserName = player.Name}; }
         }
 
         public List<GetUserDto> GetAllUsers()
@@ -93,7 +93,7 @@ namespace TournamentApp.Services.UserService
                 .ToDictionary(leaderboard => leaderboard.Name, leaderboard => leaderboard.Score);
         }
 
-        private List<int> GetPlayersIdsFromDto(List<PlayerInTournamentDto> playerInTournamentDtos)
+        private List<int> GetPlayersIdsFromDto(List<PlayerInQuizDto> playerInTournamentDtos)
         {
             return playerInTournamentDtos.Select(s => s.Id).ToList();
         }

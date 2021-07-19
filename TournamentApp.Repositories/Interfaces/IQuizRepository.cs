@@ -3,7 +3,7 @@ using TournamentApp.Model;
 
 namespace TournamentApp.Repositories.Interfaces
 {
-    public interface ITournamentRepository : ICrudRepository<Tournament>
+    public interface IQuizRepository : ICrudRepository<Quiz>
     {
     }
 }

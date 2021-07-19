@@ -19,16 +19,17 @@ namespace TournamentApp.Repositories.Implementation.UserTournamentRepo
 
         public IQueryable<TournamentWithUserDto> GetAUserWithHisTournaments(int userId)
         {
-            return  _context.Matches.Distinct()
-                .Join(_context.Rounds, match => match.RoundId, round => round.Id, (match, round) => new {match, round})
-                .Join(_context.Tournaments, @t => @t.round.TournamentId, tournaments => tournaments.Id,
-                    (@t, tournaments) => new {@t, tournaments})
-                .Where(@t => @t.@t.match.Player1Id == userId || @t.@t.match.Player2Id == userId)
-                .Select(arg => new TournamentWithUserDto()
-                {
-                   TournamentId = arg.tournaments.Id,
-                    TournamentName = arg.tournaments.TournamentName
-                });
+            return new TournamentWithUserDto().ToQueryable();
+            // _context.Matches.Distinct()
+            // .Join(_context.Rounds, match => match.RoundId, round => round.Id, (match, round) => new {match, round})
+            // .Join(_context.Tournaments, @t => @t.round.TournamentId, tournaments => tournaments.Id,
+            //     (@t, tournaments) => new {@t, tournaments})
+            // .Where(@t => @t.@t.match.Player1Id == userId || @t.@t.match.Player2Id == userId)
+            // .Select(arg => new TournamentWithUserDto()
+            // {
+            //    TournamentId = arg.tournaments.Id,
+            //     TournamentName = arg.tournaments.TournamentName
+            // });
         }
     }
 

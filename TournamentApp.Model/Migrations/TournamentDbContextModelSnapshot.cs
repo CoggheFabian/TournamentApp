@@ -19,80 +19,21 @@ namespace TournamentApp.Model.Migrations
                 .HasAnnotation("ProductVersion", "5.0.7")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("TournamentApp.Model.Match", b =>
+            modelBuilder.Entity("TournamentApp.Model.Leaderboard", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsMatchPlayed")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("Player1Id")
+                    b.Property<int>("Score")
                         .HasColumnType("int");
 
-                    b.Property<int>("Player2Id")
-                        .HasColumnType("int");
+                    b.ToTable("Leaderboards");
 
-                    b.Property<int>("RoundId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ScorePlayer1")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ScorePlayer2")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Player1Id");
-
-                    b.HasIndex("Player2Id");
-
-                    b.HasIndex("RoundId");
-
-                    b.ToTable("Matches");
+                    b
+                        .HasAnnotation("Relational:SqlQuery", "select U1.Name, sum(case when U1.Id = Matches.Player1Id then Matches.ScorePlayer1 else Matches.ScorePlayer2 end)  as score from Matches left join Users U1 on Matches.Player1Id = U1.Id or Matches.Player2Id = U1.Id where IsMatchPlayed = 1 group by U1.Name");
                 });
 
-            modelBuilder.Entity("TournamentApp.Model.Round", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("LoserNodeId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("NodeSubRoundId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("PreviousRoundId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TournamentId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("WinnerNodeId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("LoserNodeId");
-
-                    b.HasIndex("NodeSubRoundId");
-
-                    b.HasIndex("PreviousRoundId");
-
-                    b.HasIndex("TournamentId");
-
-                    b.HasIndex("WinnerNodeId");
-
-                    b.ToTable("Rounds");
-                });
-
-            modelBuilder.Entity("TournamentApp.Model.Tournament", b =>
+            modelBuilder.Entity("TournamentApp.Model.Quiz", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -102,12 +43,63 @@ namespace TournamentApp.Model.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("TournamentName")
+                    b.Property<string>("QuizName")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("QuizOwnerId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tournaments");
+                    b.HasIndex("QuizOwnerId");
+
+                    b.ToTable("Quizzes");
+                });
+
+            modelBuilder.Entity("TournamentApp.Model.QuizRound", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("MaxRoundScore")
+                        .HasColumnType("int");
+
+                    b.Property<int>("QuizId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuizId");
+
+                    b.ToTable("Rounds");
+                });
+
+            modelBuilder.Entity("TournamentApp.Model.RoundUserPoints", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("QuizRoundId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RoundId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Score")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuizRoundId");
+
+                    b.ToTable("RoundUserPoints");
                 });
 
             modelBuilder.Entity("TournamentApp.Model.User", b =>
@@ -118,7 +110,7 @@ namespace TournamentApp.Model.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -128,85 +120,44 @@ namespace TournamentApp.Model.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Email")
-                        .IsUnique()
-                        .HasFilter("[Email] IS NOT NULL");
-
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("TournamentApp.Model.Match", b =>
+            modelBuilder.Entity("TournamentApp.Model.Quiz", b =>
                 {
-                    b.HasOne("TournamentApp.Model.User", "Player1")
+                    b.HasOne("TournamentApp.Model.User", "QuizOwner")
                         .WithMany()
-                        .HasForeignKey("Player1Id")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .HasForeignKey("QuizOwnerId");
 
-                    b.HasOne("TournamentApp.Model.User", "Player2")
-                        .WithMany()
-                        .HasForeignKey("Player2Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TournamentApp.Model.Round", null)
-                        .WithMany("Matches")
-                        .HasForeignKey("RoundId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Player1");
-
-                    b.Navigation("Player2");
+                    b.Navigation("QuizOwner");
                 });
 
-            modelBuilder.Entity("TournamentApp.Model.Round", b =>
+            modelBuilder.Entity("TournamentApp.Model.QuizRound", b =>
                 {
-                    b.HasOne("TournamentApp.Model.Round", "LoserNode")
-                        .WithMany()
-                        .HasForeignKey("LoserNodeId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("TournamentApp.Model.Round", "NodeSubRound")
-                        .WithMany()
-                        .HasForeignKey("NodeSubRoundId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("TournamentApp.Model.Round", "PreviousRound")
-                        .WithMany()
-                        .HasForeignKey("PreviousRoundId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("TournamentApp.Model.Tournament", "Tournament")
+                    b.HasOne("TournamentApp.Model.Quiz", "Quiz")
                         .WithMany("Rounds")
-                        .HasForeignKey("TournamentId")
+                        .HasForeignKey("QuizId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TournamentApp.Model.Round", "WinnerNode")
-                        .WithMany()
-                        .HasForeignKey("WinnerNodeId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.Navigation("LoserNode");
-
-                    b.Navigation("NodeSubRound");
-
-                    b.Navigation("PreviousRound");
-
-                    b.Navigation("Tournament");
-
-                    b.Navigation("WinnerNode");
+                    b.Navigation("Quiz");
                 });
 
-            modelBuilder.Entity("TournamentApp.Model.Round", b =>
+            modelBuilder.Entity("TournamentApp.Model.RoundUserPoints", b =>
                 {
-                    b.Navigation("Matches");
+                    b.HasOne("TournamentApp.Model.QuizRound", null)
+                        .WithMany("UserPointsList")
+                        .HasForeignKey("QuizRoundId");
                 });
 
-            modelBuilder.Entity("TournamentApp.Model.Tournament", b =>
+            modelBuilder.Entity("TournamentApp.Model.Quiz", b =>
                 {
                     b.Navigation("Rounds");
+                });
+
+            modelBuilder.Entity("TournamentApp.Model.QuizRound", b =>
+                {
+                    b.Navigation("UserPointsList");
                 });
 #pragma warning restore 612, 618
         }

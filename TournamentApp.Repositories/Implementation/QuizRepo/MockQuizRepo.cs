@@ -5,38 +5,38 @@ using TournamentApp.Repositories.Interfaces;
 
 namespace TournamentApp.Repositories.Implementation.TournamentRepo
 {
-    public class MockTournamentRepo : ITournamentRepository
+    public class MockQuizRepo : IQuizRepository
     {
-        private List<Tournament> _tournaments;
+        private List<Quiz> _tournaments;
 
-        public MockTournamentRepo()
+        public MockQuizRepo()
         {
-            _tournaments = new List<Tournament>();
+            _tournaments = new List<Quiz>();
         }
-        public IQueryable<Tournament> Get(int id)
+        public IQueryable<Quiz> Get(int id)
         {
             return _tournaments.Where(tournament => tournament.Id == id).AsQueryable();
         }
 
-        public IQueryable<Tournament> Add(Tournament entity)
+        public IQueryable<Quiz> Add(Quiz entity)
         {
             _tournaments.Add(entity);
             return entity.ToQueryable();
         }
 
-        public IQueryable<Tournament> Delete(int id)
+        public IQueryable<Quiz> Delete(int id)
         {
             var tournamentToRemove = Get(id);
             _tournaments.Remove(tournamentToRemove.First());
             return tournamentToRemove;
         }
 
-        public IQueryable<Tournament> Update(int id, Tournament entity)
+        public IQueryable<Quiz> Update(int id, Quiz entity)
         {
             throw new System.NotImplementedException();
         }
 
-        public IQueryable<Tournament> GetAll()
+        public IQueryable<Quiz> GetAll()
         {
             return _tournaments.AsQueryable();
         }

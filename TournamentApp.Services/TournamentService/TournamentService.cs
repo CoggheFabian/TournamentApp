@@ -7,18 +7,18 @@ namespace TournamentApp.Services.TournamentService
 {
     public class TournamentService : ITournamentService
     {
-        private readonly ITournamentRepository _repository;
-        public TournamentService(ITournamentRepository repository)
+        private readonly IQuizRepository _repository;
+        public TournamentService(IQuizRepository repository)
         {
             _repository = repository;
         }
 
 
-        public CreatedTournamentDto AddTournament(CreateTournamentDto createTournamentDto)
+        public CreatedTournamentDto AddTournament(CreateQuizDto createQuizDto)
         {
-            Tournament tournament = _repository.Add(new Tournament {Date = createTournamentDto.TournamentDate, TournamentName = createTournamentDto.Name,}).First();
+            Quiz quiz = _repository.Add(new Quiz {Date = createQuizDto.TournamentDate, QuizName = createQuizDto.Name,}).First();
             _repository.Save();
-            return new CreatedTournamentDto {Id = tournament.Id, Name = tournament.TournamentName, TournamentDate = tournament.Date};
+            return new CreatedTournamentDto {Id = quiz.Id, Name = quiz.QuizName, TournamentDate = quiz.Date};
         }
     }
 }

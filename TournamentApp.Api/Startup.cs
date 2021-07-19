@@ -66,7 +66,7 @@ namespace TournamentApp.Api
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "TournamentApp.Api", Version = "v1"});
             });
 
-            services.AddScoped<ITournamentRepository, TournamentRepository>();
+            services.AddScoped<IQuizRepository, QuizRepository>();
             services.AddTransient<ITournamentService, TournamentService>();
 
             services.AddScoped<IUserRepository, UserRepository>();

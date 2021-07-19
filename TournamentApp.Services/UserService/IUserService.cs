@@ -16,7 +16,7 @@ namespace TournamentApp.Services.UserService
 
         GetUserDto FindUserById(int id);
 
-        IEnumerable<PlayerInTournamentDto> GetPlayersForTournament(List<PlayerInTournamentDto> playerInTournamentDtos);
+        IEnumerable<PlayerInQuizDto> GetPlayersForTournament(List<PlayerInQuizDto> playerInTournamentDtos);
 
         List<GetUserDto> GetAllUsers();
 

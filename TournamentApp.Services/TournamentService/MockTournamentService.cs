@@ -10,23 +10,23 @@ namespace TournamentApp.Services.TournamentService
 {
     public class MockTournamentService : ITournamentService
     {
-        private readonly ITournamentRepository _tournamentRepository;
+        private readonly IQuizRepository _quizRepository;
 
         public MockTournamentService()
         {
-            _tournamentRepository = new MockTournamentRepo();
+            _quizRepository = new MockQuizRepo();
         }
 
-        public CreatedTournamentDto AddTournament(CreateTournamentDto createTournamentDto)
+        public CreatedTournamentDto AddTournament(CreateQuizDto createQuizDto)
         {
-            var tournament = _tournamentRepository.Add(new Tournament
+            var tournament = _quizRepository.Add(new Quiz
             {
-                Date = createTournamentDto.TournamentDate,
+                Date = createQuizDto.TournamentDate,
                 Id = 3,
-                TournamentName = createTournamentDto.Name
+                QuizName = createQuizDto.Name
             }).First();
 
-            return new CreatedTournamentDto {Name = tournament.TournamentName, TournamentDate = DateTime.Now};
+            return new CreatedTournamentDto {Name = tournament.QuizName, TournamentDate = DateTime.Now};
         }
     }
 }

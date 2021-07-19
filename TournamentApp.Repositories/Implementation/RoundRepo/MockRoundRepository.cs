@@ -9,42 +9,42 @@ namespace TournamentApp.Repositories.Implementation.RoundRepo
 {
     public class MockRoundRepository : IRoundRepository
     {
-        private readonly List<Round> _rounds;
+        private readonly List<QuizRound> _rounds;
 
         public MockRoundRepository()
         {
-            _rounds = new List<Round>
+            _rounds = new List<QuizRound>
             {
-                new() {Id = 1, Tournament = new Tournament {Id = 1, Date = DateTime.Now, TournamentName = "boe"}, TournamentId = 1,},
-                new() {Id = 2, Tournament = new Tournament {Id = 1, Date = DateTime.Now, TournamentName = "boe"}, TournamentId = 1,}
+                new() {Id = 1, Quiz = new Quiz {Id = 1, Date = DateTime.Now, QuizName = "boe"}, QuizId = 1,},
+                new() {Id = 2, Quiz = new Quiz {Id = 1, Date = DateTime.Now, QuizName = "boe"}, QuizId = 1,}
             };
 
         }
 
-        public IQueryable<Round> Get(int id)
+        public IQueryable<QuizRound> Get(int id)
         {
             return _rounds.Where(x => x.Id == id).AsQueryable();
         }
 
-        public IQueryable<Round> Add(Round entity)
+        public IQueryable<QuizRound> Add(QuizRound entity)
         {
             _rounds.Add(entity);
             return Get(entity.Id);
         }
 
-        public IQueryable<Round> Delete(int id)
+        public IQueryable<QuizRound> Delete(int id)
         {
             var round = Get(id);
             _rounds.Remove(Get(id).First());
             return round;
         }
 
-        public IQueryable<Round> Update(int id, Round entity)
+        public IQueryable<QuizRound> Update(int id, QuizRound entity)
         {
             throw new System.NotImplementedException();
         }
 
-        public IQueryable<Round> GetAll()
+        public IQueryable<QuizRound> GetAll()
         {
             return _rounds.AsQueryable();
         }
@@ -54,17 +54,17 @@ namespace TournamentApp.Repositories.Implementation.RoundRepo
             throw new System.NotImplementedException();
         }
 
-        public IQueryable<Round> MakeMainRoundForTournament(CreatedTournamentDto createdTournamentDto)
+        public IQueryable<QuizRound> MakeMainRoundForTournament(CreatedTournamentDto createdTournamentDto)
         {
-            return Add(new Round
+            return Add(new QuizRound
             {
-                TournamentId = createdTournamentDto.Id
+                QuizId = createdTournamentDto.Id
             });
         }
 
-        public IQueryable<Round> GetAllRoundFromATournament(int tournamentId)
+        public IQueryable<QuizRound> GetAllRoundFromATournament(int tournamentId)
         {
-            return _rounds.Where(round => round.TournamentId == tournamentId).AsQueryable();
+            return _rounds.Where(round => round.QuizId == tournamentId).AsQueryable();
         }
     }
 }

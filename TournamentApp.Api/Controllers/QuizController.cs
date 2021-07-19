@@ -6,12 +6,12 @@ using TournamentApp.Shared.Dtos;
 
 namespace TournamentApp.Api.Controllers
 {
-    [Route("api/tournaments")]
-    public class TournamentController: ControllerBase
+    [Route("api/quizzes")]
+    public class QuizController: ControllerBase
     {
         private readonly ITournamentRoundService _tournamentRoundService;
         private readonly IRoundService _roundService;
-        public TournamentController(ITournamentRoundService tournamentService, IRoundService roundService)
+        public QuizController(ITournamentRoundService tournamentService, IRoundService roundService)
         {
             _tournamentRoundService = tournamentService;
             _roundService = roundService;
@@ -19,10 +19,10 @@ namespace TournamentApp.Api.Controllers
 
         [HttpPost]
         [Authorize]
-        public ActionResult CreateTournamentWithMainRounds([FromBody] CreateTournamentDto createTournamentDto)
+        public ActionResult CreateTournamentWithMainRounds([FromBody] CreateQuizDto createQuizDto)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState); //Change this to attribute, or middellware
-            return Ok(_tournamentRoundService.CreateTournamentWithMainRounds(createTournamentDto));
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            return Ok(_tournamentRoundService.CreateTournamentWithMainRounds(createQuizDto));
         }
 
         [HttpGet]

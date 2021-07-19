@@ -51,11 +51,11 @@ namespace TournamentApp.Services.UserService
             return new GetUserDto {Email = user.Email, Id = user.Id, Username = user.Name};
         }
 
-        public IEnumerable<PlayerInTournamentDto> GetPlayersForTournament(List<PlayerInTournamentDto> playerInTournamentDtos)
+        public IEnumerable<PlayerInQuizDto> GetPlayersForTournament(List<PlayerInQuizDto> playerInTournamentDtos)
         {
             var playerIds = GetPlayersIdsFromDto(playerInTournamentDtos);
             var players = _userRepository.GetPlayersForTournament(playerIds).ToList();
-            foreach (var player in players) { yield return new PlayerInTournamentDto {Id = player.Id, UserName = player.Name}; }
+            foreach (var player in players) { yield return new PlayerInQuizDto {Id = player.Id, UserName = player.Name}; }
         }
 
         public List<GetUserDto> GetAllUsers()
@@ -72,7 +72,7 @@ namespace TournamentApp.Services.UserService
         }
 
 
-        private List<int> GetPlayersIdsFromDto(List<PlayerInTournamentDto> playerInTournamentDtos)
+        private List<int> GetPlayersIdsFromDto(List<PlayerInQuizDto> playerInTournamentDtos)
         {
             return playerInTournamentDtos.Select(s => s.Id).ToList();
         }

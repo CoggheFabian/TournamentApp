@@ -3,10 +3,10 @@ using TournamentApp.Repositories.Interfaces;
 
 namespace TournamentApp.Repositories.Implementation.TournamentRepo
 {
-    public class TournamentRepository : CrudRepository<Tournament>, ITournamentRepository
+    public class QuizRepository : CrudRepository<Quiz>, IQuizRepository
     {
         private TournamentDbContext _context;
-        public TournamentRepository(TournamentDbContext context) : base(context)
+        public QuizRepository(TournamentDbContext context) : base(context)
         {
             _context = context;
         }

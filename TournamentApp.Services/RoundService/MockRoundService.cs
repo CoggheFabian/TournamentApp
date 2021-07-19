@@ -19,9 +19,9 @@ namespace TournamentApp.Services.RoundService
 
         public MainRoundForTournamentDto AddMainRoundForTournament(CreatedTournamentDto addedTournament)
         {
-            var mainRound = _roundRepository.Add(new Round
+            var mainRound = _roundRepository.Add(new QuizRound
             {
-                TournamentId = addedTournament.Id
+                QuizId = addedTournament.Id
             }).First();
 
             return new MainRoundForTournamentDto {MainRoundId = mainRound.Id};
@@ -32,7 +32,7 @@ namespace TournamentApp.Services.RoundService
             var rounds = _roundRepository.GetAllRoundFromATournament(tournamentId).ToList();
 
             return rounds.Select(round => new TournamentWithAllRoundsDto
-                    {RoundId = round.Id, LoserNodeId = round.LoserNodeId, PreviousRoundId = round.PreviousRoundId, WinnerNodeId = round.WinnerNodeId, NodeSubRoundId = round.NodeSubRoundId})
+                    {RoundId = round.Id})
                 .ToList();
         }
     }
