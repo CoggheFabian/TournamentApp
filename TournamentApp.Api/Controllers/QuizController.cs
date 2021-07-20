@@ -1,8 +1,8 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using TournamentApp.Services.QuizRoundService;
 using TournamentApp.Services.RoundService;
-using TournamentApp.Services.TournamentRoundService;
 using TournamentApp.Shared.Dtos;
 
 namespace TournamentApp.Api.Controllers

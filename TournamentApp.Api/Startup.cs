@@ -13,14 +13,15 @@ using TournamentApp.Model.ConfigManager;
 using TournamentApp.Repositories.Implementation.MatchRepo;
 using TournamentApp.Repositories.Implementation.QuizRepo;
 using TournamentApp.Repositories.Implementation.RoundRepo;
+using TournamentApp.Repositories.Implementation.RoundUserPointsRepo;
 using TournamentApp.Repositories.Implementation.UserRepo;
 using TournamentApp.Repositories.Implementation.UserTournamentRepo;
 using TournamentApp.Repositories.Interfaces;
 using TournamentApp.Services.Config;
 using TournamentApp.Services.MatchService;
+using TournamentApp.Services.QuizRoundService;
 using TournamentApp.Services.QuizService;
 using TournamentApp.Services.RoundService;
-using TournamentApp.Services.TournamentRoundService;
 using TournamentApp.Services.UserService;
 using TournamentApp.Services.UserTournamentService;
 
@@ -82,6 +83,8 @@ namespace TournamentApp.Api
 
             services.AddScoped<IRoundRepository, RoundRepository>();
             services.AddTransient<IRoundService, RoundService>();
+
+            services.AddScoped<IRoundUserPointsRepository, RoundUserPointsRepository>();
 
             services.AddSingleton<IDbConfigManager, DbConfigManager>();
         }

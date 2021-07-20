@@ -1,28 +1,22 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
-using Combinatorics.Collections;
-using TournamentApp.Model;
 using TournamentApp.Services.MatchService;
 using TournamentApp.Services.QuizService;
 using TournamentApp.Services.RoundService;
 using TournamentApp.Services.UserService;
 using TournamentApp.Shared.Dtos;
 
-namespace TournamentApp.Services.TournamentRoundService
+namespace TournamentApp.Services.QuizRoundService
 {
     public class QuizRoundService : IQuizRoundService
     {
         private readonly IQuizService _quizService;
         private readonly IUserService _userService;
-        private readonly IMatchService _matchService;
         private readonly IRoundService _roundService;
-        public QuizRoundService(IQuizService quizService, IUserService userService, IMatchService matchService, IRoundService roundService)
+        public QuizRoundService(IQuizService quizService, IUserService userService, IRoundService roundService)
         {
             _quizService = quizService;
             _userService = userService;
-            _matchService = matchService;
             _roundService = roundService;
         }
 
@@ -33,6 +27,9 @@ namespace TournamentApp.Services.TournamentRoundService
             var playerIds = createQuizDto.Players.Select(dto => dto.Id);
             if (playerIds.Contains(createQuizDto.QuizOwnerId)) return null;
             var addedQuiz = _quizService.AddQuiz(createQuizDto);
+            addedQuiz.QuizRoundDto = createQuizDto.Round;
+            _roundService.AddRoundToQuiz(addedQuiz);
+            _roundService.InsertPointsForRound(addedQuiz.Id, user.Id);
             return new CreatedQuizDto {Id = addedQuiz.Id, Name = addedQuiz.Name, Date = addedQuiz.Date, PlayerInQuizDtos = createQuizDto.Players};
         }
 

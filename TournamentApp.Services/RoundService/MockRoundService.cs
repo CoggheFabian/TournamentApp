@@ -17,14 +17,14 @@ namespace TournamentApp.Services.RoundService
             _roundRepository = new MockRoundRepository();
         }
 
-        public MainRoundForTournamentDto AddMainRoundForTournament(CreatedQuizDto addedQuiz)
+        public QuizRoundDto AddRoundToQuiz(CreatedQuizDto addedQuiz)
         {
             var mainRound = _roundRepository.Add(new QuizRound
             {
                 QuizId = addedQuiz.Id
             }).First();
 
-            return new MainRoundForTournamentDto {MainRoundId = mainRound.Id};
+            return new QuizRoundDto();
         }
 
         public List<TournamentWithAllRoundsDto> GetAllRoundFromATournament(int tournamentId)
@@ -34,6 +34,11 @@ namespace TournamentApp.Services.RoundService
             return rounds.Select(round => new TournamentWithAllRoundsDto
                     {RoundId = round.Id})
                 .ToList();
+        }
+
+        public RoundUserPointsDto InsertPointsForRound(int roundId, int userId, int score = 0)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

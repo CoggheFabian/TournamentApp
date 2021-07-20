@@ -20,5 +20,7 @@ namespace TournamentApp.Shared.Dtos
         [Required]
         public DateTime Date { get; set; }
 
+        public QuizRoundDto Round { get; set; }
+
     }
 }

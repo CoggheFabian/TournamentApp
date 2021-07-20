@@ -13,5 +13,7 @@ namespace TournamentApp.Model
         public int MaxRoundScore { get; set; }
 
         public List<RoundUserPoints> UserPointsList { get; set; }
+
+        public string RoundName { get; set; }
     }
 }

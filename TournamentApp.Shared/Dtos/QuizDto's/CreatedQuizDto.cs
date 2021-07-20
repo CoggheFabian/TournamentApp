@@ -11,5 +11,7 @@ namespace TournamentApp.Shared.Dtos
         public DateTime Date { get; set; }
 
         public List<PlayerInQuizDto> PlayerInQuizDtos { get; set; }
+
+        public QuizRoundDto QuizRoundDto { get; set; }
     }
 }

@@ -2,14 +2,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Combinatorics.Collections;
 using TournamentApp.Model;
-using TournamentApp.Repositories.Implementation.RoundRepo;
 using TournamentApp.Services.MatchService;
 using TournamentApp.Services.QuizService;
 using TournamentApp.Services.RoundService;
 using TournamentApp.Services.UserService;
 using TournamentApp.Shared.Dtos;
 
-namespace TournamentApp.Services.TournamentRoundService
+namespace TournamentApp.Services.QuizRoundService
 {
     public class MockQuizRoundService : IQuizRoundService
     {
@@ -32,9 +31,9 @@ namespace TournamentApp.Services.TournamentRoundService
             var addedQuiz = _mockQuizService.AddQuiz(createQuizDto);
             var playerInTournamentDtos = GetPlayersForTournament(createQuizDto.Players);
             var combinationsPlayers = new Combinations<PlayerInQuizDto>(playerInTournamentDtos, 2);
-            var mainRound = _mockRoundService.AddMainRoundForTournament(addedQuiz);
-            var playableMatches = GenerateMatchesBasedOnPlayerCombination(combinationsPlayers, mainRound.MainRoundId );
-            _mockMatchService.BulkInsertMatches(playableMatches.ToList());
+            var mainRound = _mockRoundService.AddRoundToQuiz(addedQuiz);
+            //var playableMatches = GenerateMatchesBasedOnPlayerCombination(combinationsPlayers);
+            //_mockMatchService.BulkInsertMatches(playableMatches.ToList());
             return new CreatedQuizDto {Id = addedQuiz.Id, Name = addedQuiz.Name, Date = addedQuiz.Date, PlayerInQuizDtos = createQuizDto.Players};
         }
 

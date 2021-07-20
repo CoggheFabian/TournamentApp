@@ -1,6 +1,6 @@
 using TournamentApp.Shared.Dtos;
 
-namespace TournamentApp.Services.TournamentRoundService
+namespace TournamentApp.Services.QuizRoundService
 {
     public interface IQuizRoundService
     {

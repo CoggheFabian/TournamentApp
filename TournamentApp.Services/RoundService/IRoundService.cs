@@ -5,9 +5,10 @@ namespace TournamentApp.Services.RoundService
 {
     public interface IRoundService
     {
-        public MainRoundForTournamentDto AddMainRoundForTournament(CreatedQuizDto addedQuiz);
+        public QuizRoundDto AddRoundToQuiz(CreatedQuizDto addedQuiz);
 
         List<TournamentWithAllRoundsDto> GetAllRoundFromATournament(int tournamentId);
+        RoundUserPointsDto InsertPointsForRound(int roundId, int userId, int score = 0);
 
     }
 }
