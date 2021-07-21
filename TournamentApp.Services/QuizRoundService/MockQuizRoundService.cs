@@ -37,6 +37,11 @@ namespace TournamentApp.Services.QuizRoundService
             return new CreatedQuizDto {Id = addedQuiz.Id, Name = addedQuiz.Name, Date = addedQuiz.Date, PlayerInQuizDtos = createQuizDto.Players};
         }
 
+        public QuizRoundDto AddNewRound(QuizRoundDto quizRoundDto, int quizId, string userEmail)
+        {
+            throw new System.NotImplementedException();
+        }
+
         private IEnumerable<PlayerInQuizDto> GetPlayersForTournament(List<PlayerInQuizDto> playerInTournamentDtos)
         {
             var users = _mockUserService.GetPlayersForQuiz(playerInTournamentDtos);

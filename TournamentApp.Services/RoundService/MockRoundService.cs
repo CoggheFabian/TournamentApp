@@ -27,6 +27,11 @@ namespace TournamentApp.Services.RoundService
             return new QuizRoundDto();
         }
 
+        public QuizRoundDto AddRoundToQuiz(QuizRoundDto quizDto, int quizId)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public List<TournamentWithAllRoundsDto> GetAllRoundFromATournament(int tournamentId)
         {
             var rounds = _roundRepository.GetAllRoundFromATournament(tournamentId).ToList();

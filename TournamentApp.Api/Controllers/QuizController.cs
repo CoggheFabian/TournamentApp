@@ -1,4 +1,4 @@
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TournamentApp.Services.QuizRoundService;
@@ -20,12 +20,21 @@ namespace TournamentApp.Api.Controllers
 
         [HttpPost]
         [Authorize]
-        public IActionResult CreateTournamentWithMainRounds([FromBody] CreateQuizDto createQuizDto)
+        public IActionResult CreateQuizWithRound([FromBody] CreateQuizDto createQuizDto)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            var createdQuizDto = _quizRoundService.CreateQuiz(createQuizDto, User.FindFirst(ClaimTypes.Email)?.Value);
+            var createdQuizDto = _quizRoundService.CreateQuiz(createQuizDto, GetUserEmailFromToken());
             if (createdQuizDto == null) return BadRequest("A quiz owner can't be a player");
             return Ok(createQuizDto);
+        }
+
+        [HttpPost]
+        [Authorize]
+        [Route("{quizId:int}/rounds")]
+        public IActionResult AddRound([FromBody] QuizRoundDto roundDto, int quizId)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            return Ok(_quizRoundService.AddNewRound(roundDto, quizId, GetUserEmailFromToken()));
         }
 
         [HttpGet]
@@ -34,6 +43,11 @@ namespace TournamentApp.Api.Controllers
         public ActionResult GetTournamentDetails(int tournamentId)
         {
             return Ok(_roundService.GetAllRoundFromATournament(tournamentId));
+        }
+
+        private string GetUserEmailFromToken()
+        {
+            return User.FindFirst(ClaimTypes.Email)?.Value;
         }
 
 
