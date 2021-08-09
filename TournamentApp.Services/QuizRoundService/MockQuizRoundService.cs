@@ -42,6 +42,16 @@ namespace TournamentApp.Services.QuizRoundService
             throw new System.NotImplementedException();
         }
 
+        public StopQuizDto StopQuiz(int quizId, string userEmail)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public StopQuizDto StopQuiz(int quizId)
+        {
+            throw new System.NotImplementedException();
+        }
+
         private IEnumerable<PlayerInQuizDto> GetPlayersForTournament(List<PlayerInQuizDto> playerInTournamentDtos)
         {
             var users = _mockUserService.GetPlayersForQuiz(playerInTournamentDtos);

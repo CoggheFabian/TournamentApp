@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using TournamentApp.Model;
 using TournamentApp.Repositories.Interfaces;
@@ -19,6 +20,16 @@ namespace TournamentApp.Services.QuizService
             var quiz = _repository.Add(new Quiz {Date = createQuizDto.Date, QuizName = createQuizDto.Name, QuizOwnerId = createQuizDto.QuizOwnerId}).First();
             _repository.Save();
             return new CreatedQuizDto {Id = quiz.Id, Name = quiz.QuizName, Date = quiz.Date};
+        }
+
+        public QuizDto GetQuiz(int id)
+        {
+            return _repository.Get(id).First() != null ? new QuizDto {Id = id} : null;
+        }
+
+        public void StopQuiz(int quizId, int userId)
+        {
+            _repository.StopQuiz(quizId, userId);
         }
     }
 }

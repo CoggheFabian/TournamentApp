@@ -27,6 +27,8 @@ namespace TournamentApp.Model
 
         public DbSet<Leaderboard> Leaderboards { get; set; }
 
+        public DbSet<RoundUserPoints> RoundUserPoints { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
@@ -84,7 +86,6 @@ namespace TournamentApp.Model
             modelBuilder.Entity<Leaderboard>().ToSqlQuery(
                     "select U1.Name, sum(case when U1.Id = Matches.Player1Id then Matches.ScorePlayer1 else Matches.ScorePlayer2 end)  as score from Matches left join Users U1 on Matches.Player1Id = U1.Id or Matches.Player2Id = U1.Id where IsMatchPlayed = 1 group by U1.Name")
                 .HasNoKey();
-
             base.OnModelCreating(modelBuilder);
 
         }

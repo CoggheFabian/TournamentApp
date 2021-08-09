@@ -45,5 +45,15 @@ namespace TournamentApp.Repositories.Implementation.QuizRepo
         {
             throw new System.NotImplementedException();
         }
+
+        public void StopQuiz(int quizId, int UserId)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void StopQuiz(int quizId)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

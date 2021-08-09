@@ -27,5 +27,20 @@ namespace TournamentApp.Services.QuizService
 
             return new CreatedQuizDto {Name = tournament.QuizName, Date = DateTime.Now};
         }
+
+        public QuizDto GetQuiz(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void StopQuiz(int quizId, int userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void StopQuiz(int quizId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

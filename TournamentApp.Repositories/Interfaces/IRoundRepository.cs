@@ -10,6 +10,9 @@ namespace TournamentApp.Repositories.Interfaces
     {
         IQueryable<QuizRound> MakeMainRoundForTournament(CreatedQuizDto createdQuizDto);
         IQueryable<QuizRound> GetAllRoundFromATournament(int tournamentId);
+        IQueryable<QuizRound> GetPlayersFromARound(int roundId);
+
+
 
     }
 }

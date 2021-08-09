@@ -41,6 +41,31 @@ namespace TournamentApp.Services.RoundService
                 .ToList();
         }
 
+        public RoundUserPointsDto SavePointsForUserInRound(int roundId, int userId, int score = 0)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void InsertUsersIntoTheRoundUserPoints(int roundId, List<PlayerInQuizDto> playerInQuiz, int scores = 0)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void InsertUsersIntoTheRoundUserPoints(int roundId, List<UpdateScoreForRoundDto> playerInQuiz)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IEnumerable<GetUserPointDto> GetPlayersFromARound(int roundId)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public RoundUserPointsDto UpdateScoreForPlayer(int userId, int score, int roundId)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public RoundUserPointsDto InsertPointsForRound(int roundId, int userId, int score = 0)
         {
             throw new System.NotImplementedException();

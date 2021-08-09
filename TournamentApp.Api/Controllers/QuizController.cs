@@ -1,6 +1,8 @@
-﻿using System.Security.Claims;
+﻿using System.Linq;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using TournamentApp.Model;
 using TournamentApp.Services.QuizRoundService;
 using TournamentApp.Services.RoundService;
 using TournamentApp.Shared.Dtos;
@@ -34,7 +36,18 @@ namespace TournamentApp.Api.Controllers
         public IActionResult AddRound([FromBody] QuizRoundDto roundDto, int quizId)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            return Ok(_quizRoundService.AddNewRound(roundDto, quizId, GetUserEmailFromToken()));
+            var newRound = _quizRoundService.AddNewRound(roundDto, quizId, GetUserEmailFromToken());
+            if (newRound != null) return Ok(newRound);
+            return BadRequest("Something went wrong while adding the round to a quiz");
+        }
+
+        [HttpPut]
+        [Authorize]
+        [Route("{quizId:int}")]
+        public IActionResult StopQuiz(int quizId)
+        {
+            _quizRoundService.StopQuiz(quizId, GetUserEmailFromToken());
+            return Ok("Quiz has been stopped");
         }
 
         [HttpGet]

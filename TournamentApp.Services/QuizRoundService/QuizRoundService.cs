@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using TournamentApp.Services.MatchService;
 using TournamentApp.Services.QuizService;
@@ -13,6 +14,7 @@ namespace TournamentApp.Services.QuizRoundService
         private readonly IQuizService _quizService;
         private readonly IUserService _userService;
         private readonly IRoundService _roundService;
+
         public QuizRoundService(IQuizService quizService, IUserService userService, IRoundService roundService)
         {
             _quizService = quizService;
@@ -28,21 +30,37 @@ namespace TournamentApp.Services.QuizRoundService
             if (playerIds.Contains(createQuizDto.QuizOwnerId)) return null;
             var addedQuiz = _quizService.AddQuiz(createQuizDto);
             addedQuiz.QuizRoundDto = createQuizDto.Round;
-            _roundService.AddRoundToQuiz(addedQuiz.QuizRoundDto, addedQuiz.Id);
-            _roundService.InsertPointsForRound(addedQuiz.Id, user.Id);
+            var addedRound = _roundService.AddRoundToQuiz(addedQuiz.QuizRoundDto, addedQuiz.Id);
+            _roundService.InsertUsersIntoTheRoundUserPoints(addedRound.Id, createQuizDto.Players);
             return new CreatedQuizDto {Id = addedQuiz.Id, Name = addedQuiz.Name, Date = addedQuiz.Date, PlayerInQuizDtos = createQuizDto.Players};
         }
 
         public QuizRoundDto AddNewRound(QuizRoundDto quizRoundDto, int quizId, string userEmail)
         {
-            var user = GetUserFromEmail(userEmail);
+            if (_quizService.GetQuiz(quizId) == null)
+                return null;
+
             var addedRound = _roundService.AddRoundToQuiz(quizRoundDto, quizId);
-            var addedPoints = _roundService.InsertPointsForRound(addedRound.Id, user.Id);
+            var players = _roundService.GetPlayersFromARound(quizId).ToList();
+            _roundService.InsertUsersIntoTheRoundUserPoints(addedRound.Id, TransFormGetUserPointDtoToPlayerInQuizDto(players).ToList());
             quizRoundDto.QuizId = quizId;
-            quizRoundDto.Id = addedPoints.RoundId;
+            quizRoundDto.Id = addedRound.Id;
             return quizRoundDto;
         }
 
+        public StopQuizDto StopQuiz(int quizId, string userEmail)
+        {
+            var userId = _userService.GetUserByEmail(userEmail).Id;
+            _quizService.StopQuiz(quizId, userId);
+            return new StopQuizDto {QuizId = quizId};
+        }
+
         private GetUserDto GetUserFromEmail(string email) { return _userService.GetUserByEmail(email); }
+
+        private IEnumerable<UpdateScoreForRoundDto> TransFormGetUserPointDtoToPlayerInQuizDto(
+            IEnumerable<GetUserPointDto> userPointDtos)
+        {
+            return userPointDtos.Select(dto => new UpdateScoreForRoundDto() {Score = 0, UserId = dto.UserId});
+        }
     }
 }

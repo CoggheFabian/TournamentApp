@@ -7,5 +7,7 @@ namespace TournamentApp.Services.QuizRoundService
         CreatedQuizDto CreateQuiz(CreateQuizDto createQuizDto, string userEmail);
 
         QuizRoundDto AddNewRound(QuizRoundDto quizRoundDto, int quizId, string userEmail);
+
+        public StopQuizDto StopQuiz(int quizId, string userEmail);
     }
 }

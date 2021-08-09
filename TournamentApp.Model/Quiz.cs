@@ -11,6 +11,9 @@ namespace TournamentApp.Model
 
         public int QuizOwnerId { get; set; }
 
-        [JsonIgnore] public List<QuizRound> Rounds { get; set; }
+        public bool IsQuizFinished { get; set; }
+
+        [JsonIgnore]
+        public List<QuizRound> Rounds { get; set; }
     }
 }

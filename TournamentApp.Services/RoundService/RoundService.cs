@@ -21,18 +21,20 @@ namespace TournamentApp.Services.RoundService
 
         public QuizRoundDto AddRoundToQuiz(QuizRoundDto quizDto, int quizId)
         {
-            var round = _roundRepository.Add(new QuizRound {QuizId = quizId, RoundName = quizDto.RoundName, MaxRoundScore = quizDto.MaxScorePerRound,}).First();
+            var round = _roundRepository.Add(new QuizRound {QuizId = quizId, RoundName = quizDto.RoundName, MaxRoundScore = quizDto.MaxScorePerRound}).First();
            _roundRepository.Save();
            return new QuizRoundDto{QuizId = round.QuizId, RoundName = round.RoundName, MaxScorePerRound = round.MaxRoundScore, Id = round.Id};
         }
 
-        public RoundUserPointsDto InsertPointsForRound(int roundId, int userId, int score = 0)
+
+
+        public IEnumerable<GetUserPointDto> GetPlayersFromARound(int quizId)
         {
-            var userPoints = _roundUserPointsRepository.Add(new RoundUserPoints
-            {Score = score, RoundId = roundId, UserId = userId}).First();
-            _roundUserPointsRepository.Save();
-            return new RoundUserPointsDto
-                {Score = userPoints.Score, QuizRoundId = roundId, RoundId = roundId, UserId = userId};
+            var players = _roundUserPointsRepository.GetPlayersFromQuiz(quizId);
+            foreach (var roundUserPoints in players)
+            {
+                yield return new GetUserPointDto() {RoundId = roundUserPoints.RoundId, UserId = roundUserPoints.UserId};
+            }
         }
 
 
@@ -43,6 +45,38 @@ namespace TournamentApp.Services.RoundService
             return rounds.Select(round => new TournamentWithAllRoundsDto
                 {RoundId = round.Id})
                 .ToList();
+        }
+
+
+        public RoundUserPointsDto SavePointsForUserInRound(int roundId, int userId, int score = 0)
+        {
+            var userPoints = _roundUserPointsRepository.Add(new RoundUserPoints
+                {Score = score, RoundId = roundId, UserId = userId}).First();
+            _roundUserPointsRepository.Save();
+            return new RoundUserPointsDto
+                {Score = userPoints.Score, QuizRoundId = roundId, RoundId = roundId, UserId = userId};
+        }
+
+        public void InsertUsersIntoTheRoundUserPoints(int roundId, List<PlayerInQuizDto> playerInQuiz, int score)
+        {
+            foreach (var player in playerInQuiz)
+            {
+                SavePointsForUserInRound(roundId, player.Id);
+            }
+        }
+
+        public void InsertUsersIntoTheRoundUserPoints(int roundId, List<UpdateScoreForRoundDto> playerInQuiz)
+        {
+            foreach (var player in playerInQuiz)
+            {
+                SavePointsForUserInRound(roundId, player.UserId, player.Score);
+            }
+        }
+
+        public RoundUserPointsDto UpdateScoreForPlayer(int userId, int score, int roundId)
+        {
+            _roundUserPointsRepository.UpdateScoreForPlayer(userId, score, roundId);
+            return new RoundUserPointsDto{Score = score, RoundId = roundId, UserId = userId};
         }
     }
 }

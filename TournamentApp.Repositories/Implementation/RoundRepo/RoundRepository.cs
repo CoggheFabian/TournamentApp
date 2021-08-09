@@ -32,5 +32,9 @@ namespace TournamentApp.Repositories.Implementation.RoundRepo
             return GetAll().Where(round => round.QuizId == tournamentId);
         }
 
+        public IQueryable<QuizRound> GetPlayersFromARound(int roundId)
+        {
+            return GetAll().Where(round => round.Id == roundId);
+        }
     }
 }
