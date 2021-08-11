@@ -6,10 +6,13 @@ using TournamentApp.Shared.Dtos;
 
 namespace TournamentApp.Repositories.Interfaces
 {
-    public interface IRoundRepository : ICrudRepository<Round>
+    public interface IRoundRepository : ICrudRepository<QuizRound>
     {
-        IQueryable<Round> MakeMainRoundForTournament(CreatedTournamentDto createdTournamentDto);
-        IQueryable<Round> GetAllRoundFromATournament(int tournamentId);
+        IQueryable<QuizRound> MakeMainRoundForTournament(CreatedQuizDto createdQuizDto);
+        IQueryable<QuizRound> GetAllRoundFromATournament(int tournamentId);
+        IQueryable<QuizRound> GetPlayersFromARound(int roundId);
+
+
 
     }
 }

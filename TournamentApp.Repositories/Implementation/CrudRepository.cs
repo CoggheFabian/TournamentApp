@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -36,7 +37,7 @@ namespace TournamentApp.Repositories.Implementation
 
         public IQueryable<T> Update(int id, T entity)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public IQueryable<T> GetAll()

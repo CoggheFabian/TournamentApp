@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TournamentApp.Model;
 
 namespace TournamentApp.Model.Migrations
 {
     [DbContext(typeof(TournamentDbContext))]
-    partial class TournamentDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210719133255_AddQuizPoints")]
+    partial class AddQuizPoints
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -43,16 +45,15 @@ namespace TournamentApp.Model.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsQuizFinished")
-                        .HasColumnType("bit");
-
                     b.Property<string>("QuizName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("QuizOwnerId")
+                    b.Property<int?>("QuizOwnerId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("QuizOwnerId");
 
                     b.ToTable("Quizzes");
                 });
@@ -69,9 +70,6 @@ namespace TournamentApp.Model.Migrations
 
                     b.Property<int>("QuizId")
                         .HasColumnType("int");
-
-                    b.Property<string>("RoundName")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -125,6 +123,15 @@ namespace TournamentApp.Model.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("TournamentApp.Model.Quiz", b =>
+                {
+                    b.HasOne("TournamentApp.Model.User", "QuizOwner")
+                        .WithMany()
+                        .HasForeignKey("QuizOwnerId");
+
+                    b.Navigation("QuizOwner");
                 });
 
             modelBuilder.Entity("TournamentApp.Model.QuizRound", b =>

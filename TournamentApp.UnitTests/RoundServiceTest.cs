@@ -1,6 +1,5 @@
 ﻿using System;
 using TournamentApp.Services.RoundService;
-using TournamentApp.Services.TournamentService;
 using TournamentApp.Services.UserService;
 using TournamentApp.Shared.Dtos;
 using Xunit;
